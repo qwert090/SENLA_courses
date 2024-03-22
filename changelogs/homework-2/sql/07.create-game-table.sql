@@ -1,6 +1,6 @@
 CREATE TABLE game
 (
-    id bigserial NOT NULL, 
+    id bigint NOT NULL, 
     name varchar(30) NOT NULL, 
     PRIMARY KEY (id)
 );

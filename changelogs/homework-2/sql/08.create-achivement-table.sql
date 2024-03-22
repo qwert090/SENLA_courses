@@ -6,7 +6,7 @@ CREATE TABLE achivement
     platform varchar(30) NOT NULL,
     expirience int NOT NULL,
     type varchar(20) NOT NULL,
-    game_id bigserial NOT NULL,
+    game_id bigint NOT NULL,
     PRIMARY KEY (id),
     FOREIGN key (game_id) references game(id)
 );

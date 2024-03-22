@@ -4,7 +4,7 @@ CREATE TABLE achivement_request
     game_name varchar(30) NOT NULL, 
     achivement_name varchar(30) NOT NULL, 
     platform varchar(30) NOT NULL, 
-    user_id bigserial NOT NULL,
+    user_id bigint NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) references "user"(id)
 );
