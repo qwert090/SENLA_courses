@@ -1,6 +1,7 @@
-package org.example.di;
+package org.example.di.value;
 
 import org.example.di.annotations.Value;
+import org.example.di.value.PropertyReader;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -17,12 +18,13 @@ public class ValueHandler {
         });
     }
     private static void valueInjection(Class<?> clazz, Object object) throws ClassNotFoundException {
+        PropertyReader propertyReader = new PropertyReader();
         String classPath =  clazz.getName();
         Class<?> aClass = Class.forName(classPath);
         for (Field field : aClass.getDeclaredFields()) {
             if (field.isAnnotationPresent(Value.class)) {
                 Value annotation = field.getAnnotation(Value.class);
-                String value = PropertyReader.getValue(annotation.value());
+                String value = propertyReader.getValue(annotation.value());
                 field.setAccessible(true);
                 try {
                     field.set(object, value);

@@ -1,4 +1,4 @@
-package org.example.di;
+package org.example.di.value;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class PropertyReader {
 
-    public static String getValue(String paramName){
+    public final String getValue(String paramName){
         String appProperties = "main/src/main/resources/application.properties";
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(appProperties))){
             String line = "";
