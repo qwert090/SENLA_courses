@@ -9,18 +9,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-public class BeanWithFieldsInjection {
+public class FieldsBeanInjectionStrategy {
 
     public static boolean createBeanWithFieldsInjection(Class<?> clazz, Map<Class<?>, Object> beanContainer) {
         List<Field> fields = Arrays.stream(clazz.getDeclaredFields())
                 .filter(field -> field.isAnnotationPresent(Autowire.class))
                 .toList();
-        Object bean = BeanWithoutInjection.createBeanWithoutInjection(clazz);
+        Object bean = EmptyConstructorBeanInjectionStrategy.createBeanWithoutInjection(clazz);
         for (Field field : fields) {
             Object fieldObject;
             try {
                 fieldObject = BeanFactory.getBean(field.getType(), beanContainer);
             } catch (NoSuchElementException e) {
+
                 return false;
             }
             try {
@@ -32,6 +33,7 @@ public class BeanWithFieldsInjection {
             }
         }
         beanContainer.put(clazz, bean);
+
         return true;
     }
 }

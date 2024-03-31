@@ -10,5 +10,6 @@ import java.lang.annotation.Target;
 @Retention(value = RetentionPolicy.RUNTIME)
 public @interface Value {
     String value();
+
     String path() default "";
 }

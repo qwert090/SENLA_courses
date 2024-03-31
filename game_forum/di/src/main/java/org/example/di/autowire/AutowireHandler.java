@@ -1,9 +1,5 @@
 package org.example.di.autowire;
 
-import org.example.di.autowire.BeanWithConstructorInjection;
-import org.example.di.autowire.BeanWithFieldsInjection;
-import org.example.di.autowire.BeanWithMethodsInjection;
-import org.example.di.autowire.BeanWithoutInjection;
 import org.example.di.annotations.Autowire;
 
 import java.lang.reflect.AnnotatedElement;
@@ -25,22 +21,24 @@ public class AutowireHandler {
         var annotatedFields = getAutowiredAnnotated(Class::getDeclaredFields, clazz);
         var annotatedMethods = getAutowiredAnnotated(Class::getDeclaredMethods, clazz);
         var annotatedConstructors = getAutowiredAnnotated(Class::getDeclaredConstructors, clazz);
+        boolean created = false;
         if (!annotatedFields.isEmpty() && !annotatedMethods.isEmpty() ||
                 !annotatedFields.isEmpty() && !annotatedConstructors.isEmpty() ||
                 !annotatedMethods.isEmpty() && !annotatedConstructors.isEmpty()) {
             throw new RuntimeException("cannot mix injection type");
         }
         if (!annotatedFields.isEmpty()) {
-            return BeanWithFieldsInjection.createBeanWithFieldsInjection(clazz, beanContainer);
+            created = FieldsBeanInjectionStrategy.createBeanWithFieldsInjection(clazz, beanContainer);
         } else if (!annotatedMethods.isEmpty()) {
-            return BeanWithMethodsInjection.createBeanWithMethodsInjection(clazz, beanContainer);
+            created = MethodBeanInjectionStrategy.createBeanWithMethodsInjection(clazz, beanContainer);
         } else if (!annotatedConstructors.isEmpty()) {
-            return BeanWithConstructorInjection.createBeanWithConstructorInjection(clazz, beanContainer);
+            created = ConstructorBeanInjectionStrategy.createBeanWithConstructorInjection(clazz, beanContainer);
         } else {
-            Object beanWithoutInjection = BeanWithoutInjection.createBeanWithoutInjection(clazz);
+            Object beanWithoutInjection = EmptyConstructorBeanInjectionStrategy.createBeanWithoutInjection(clazz);
             beanContainer.put(clazz, beanWithoutInjection);
-            return true;
+            created = true;
         }
+        return created;
     }
 
     public void createBeans(ArrayList<Class<?>> toCreate, Map<Class<?>, Object> beanContainer) {

@@ -9,7 +9,7 @@ public class Context {
         beanFactory = new BeanFactory(packageName);
     }
 
-    public <T> T getBean(Class<T> clazz){
+    public <T> T getBean(Class<T> clazz) {
         return BeanFactory.getBean(clazz, beanFactory.getBeanContainer());
     }
 }

@@ -5,7 +5,10 @@ import org.example.di.autowire.AutowireHandler;
 import org.example.di.value.ValueHandler;
 import org.reflections.Reflections;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class BeanFactory {
     private final ArrayList<Class<?>> componentContainer;
@@ -25,7 +28,7 @@ public class BeanFactory {
         ValueHandler.handle(beanContainer);
     }
 
-    public static  <T> T getBean(Class<T> clazz, Map<Class<?>, Object> beanContainer) {
+    public static <T> T getBean(Class<T> clazz, Map<Class<?>, Object> beanContainer) {
         Class<?> key = beanContainer.keySet().stream()
                 .filter(clazz::isAssignableFrom)
                 .findFirst()

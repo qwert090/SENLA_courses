@@ -2,7 +2,8 @@ package org.example.di.autowire;
 
 import java.lang.reflect.Constructor;
 
-public class BeanWithoutInjection {
+public class EmptyConstructorBeanInjectionStrategy {
+
     public static Object createBeanWithoutInjection(Class<?> clazz) {
         try {
             Constructor<?> emptyConstructor = clazz.getDeclaredConstructor();

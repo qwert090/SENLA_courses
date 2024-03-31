@@ -6,7 +6,7 @@ import org.example.di.annotations.Autowire;
 import java.lang.reflect.Constructor;
 import java.util.*;
 
-public class BeanWithConstructorInjection {
+public class ConstructorBeanInjectionStrategy {
 
     public static boolean createBeanWithConstructorInjection(Class<?> clazz, Map<Class<?>, Object> beanContainer) {
         List<Object> paramObjects = new ArrayList<>();
