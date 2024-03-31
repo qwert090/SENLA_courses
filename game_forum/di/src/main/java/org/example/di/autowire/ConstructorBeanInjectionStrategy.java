@@ -8,7 +8,7 @@ import java.util.*;
 
 public class ConstructorBeanInjectionStrategy {
 
-    public static boolean createBeanWithConstructorInjection(Class<?> clazz, Map<Class<?>, Object> beanContainer) {
+    public static boolean execute(Class<?> clazz, Map<Class<?>, Object> beanContainer) {
         List<Object> paramObjects = new ArrayList<>();
         Constructor<?> constructor = Arrays.stream(clazz.getDeclaredConstructors())
                 .filter(c -> c.isAnnotationPresent(Autowire.class))

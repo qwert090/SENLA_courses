@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 
 public class EmptyConstructorBeanInjectionStrategy {
 
-    public static Object createBeanWithoutInjection(Class<?> clazz) {
+    public static Object execute(Class<?> clazz) {
         try {
             Constructor<?> emptyConstructor = clazz.getDeclaredConstructor();
             emptyConstructor.setAccessible(true);

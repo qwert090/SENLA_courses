@@ -22,19 +22,14 @@ public class AutowireHandler {
         var annotatedMethods = getAutowiredAnnotated(Class::getDeclaredMethods, clazz);
         var annotatedConstructors = getAutowiredAnnotated(Class::getDeclaredConstructors, clazz);
         boolean created = false;
-        if (!annotatedFields.isEmpty() && !annotatedMethods.isEmpty() ||
-                !annotatedFields.isEmpty() && !annotatedConstructors.isEmpty() ||
-                !annotatedMethods.isEmpty() && !annotatedConstructors.isEmpty()) {
-            throw new RuntimeException("cannot mix injection type");
-        }
-        if (!annotatedFields.isEmpty()) {
-            created = FieldsBeanInjectionStrategy.createBeanWithFieldsInjection(clazz, beanContainer);
+        if (!annotatedConstructors.isEmpty()) {
+            created = ConstructorBeanInjectionStrategy.execute(clazz, beanContainer);
         } else if (!annotatedMethods.isEmpty()) {
-            created = MethodBeanInjectionStrategy.createBeanWithMethodsInjection(clazz, beanContainer);
-        } else if (!annotatedConstructors.isEmpty()) {
-            created = ConstructorBeanInjectionStrategy.createBeanWithConstructorInjection(clazz, beanContainer);
+            created = MethodBeanInjectionStrategy.execute(clazz, beanContainer);
+        } else if (!annotatedFields.isEmpty()) {
+            created = FieldsBeanInjectionStrategy.execute(clazz, beanContainer);
         } else {
-            Object beanWithoutInjection = EmptyConstructorBeanInjectionStrategy.createBeanWithoutInjection(clazz);
+            Object beanWithoutInjection = EmptyConstructorBeanInjectionStrategy.execute(clazz);
             beanContainer.put(clazz, beanWithoutInjection);
             created = true;
         }

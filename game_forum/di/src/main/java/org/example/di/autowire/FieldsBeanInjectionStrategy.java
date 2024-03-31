@@ -11,11 +11,11 @@ import java.util.NoSuchElementException;
 
 public class FieldsBeanInjectionStrategy {
 
-    public static boolean createBeanWithFieldsInjection(Class<?> clazz, Map<Class<?>, Object> beanContainer) {
+    public static boolean execute(Class<?> clazz, Map<Class<?>, Object> beanContainer) {
         List<Field> fields = Arrays.stream(clazz.getDeclaredFields())
                 .filter(field -> field.isAnnotationPresent(Autowire.class))
                 .toList();
-        Object bean = EmptyConstructorBeanInjectionStrategy.createBeanWithoutInjection(clazz);
+        Object bean = EmptyConstructorBeanInjectionStrategy.execute(clazz);
         for (Field field : fields) {
             Object fieldObject;
             try {

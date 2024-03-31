@@ -11,12 +11,12 @@ import java.util.NoSuchElementException;
 
 public class MethodBeanInjectionStrategy {
 
-    public static boolean createBeanWithMethodsInjection(Class<?> clazz, Map<Class<?>, Object> beanContainer) {
+    public static boolean execute(Class<?> clazz, Map<Class<?>, Object> beanContainer) {
         List<Method> methods = Arrays.stream(clazz.getDeclaredMethods())
                 .filter(method -> method.isAnnotationPresent(Autowire.class))
                 .filter(method -> method.getParameterCount() == 1)
                 .toList();
-        Object bean = EmptyConstructorBeanInjectionStrategy.createBeanWithoutInjection(clazz);
+        Object bean = EmptyConstructorBeanInjectionStrategy.execute(clazz);
         for (Method method : methods) {
             Object paramObject;
             try {
