@@ -4,7 +4,6 @@ import org.example.di.annotations.Autowire;
 import org.example.di.annotations.Component;
 import org.example.services.Service;
 
-
 @Component
 public class Controller {
     private Service service;

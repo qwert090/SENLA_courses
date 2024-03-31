@@ -101,5 +101,4 @@
         <sqlFile encoding="utf8" path="./sql/23.create-game_id_index.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
-
 </databaseChangeLog> 
