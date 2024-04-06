@@ -2,7 +2,6 @@ package org.example.repository;
 
 import lombok.Getter;
 import org.example.entity.Category;
-import org.example.entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
