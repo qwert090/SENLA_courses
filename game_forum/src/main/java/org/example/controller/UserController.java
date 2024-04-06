@@ -3,14 +3,14 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.UserDto;
 import org.example.service.serviceInterface.UserService;
-import org.example.utils.Json;
+import org.example.utils.JsonMapper;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final Json json;
+    private final JsonMapper json;
 
     public void createUser(String serializedUser){
         UserDto userDto = json.deserialize(serializedUser, UserDto.class);

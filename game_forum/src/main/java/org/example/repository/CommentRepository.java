@@ -2,6 +2,7 @@ package org.example.repository;
 
 import lombok.Getter;
 import org.example.entity.Comment;
+import org.example.entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -28,5 +29,12 @@ public class CommentRepository {
                 .filter(id -> id.getId() == commentId)
                 .findFirst();
         return readComments;
+    }
+
+    public void update(Comment updateComment){
+        comments = comments.stream()
+                .filter(comment -> comment.getId() == updateComment.getId())
+                .map(comment -> updateComment)
+                .toList();
     }
 }

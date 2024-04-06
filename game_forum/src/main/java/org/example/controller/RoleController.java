@@ -3,14 +3,14 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.RoleDto;
 import org.example.service.serviceInterface.RoleService;
-import org.example.utils.Json;
+import org.example.utils.JsonMapper;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class RoleController {
     private final RoleService roleService;
-    private final Json json;
+    private final JsonMapper json;
 
     public void createRole(String serializedRole){
         RoleDto roleDto = json.deserialize(serializedRole, RoleDto.class);

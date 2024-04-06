@@ -2,6 +2,7 @@ package org.example.repository;
 
 import lombok.Getter;
 import org.example.entity.Achievement;
+import org.example.entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -28,5 +29,12 @@ public class AchievementRepository {
                 .filter(id -> id.getId() == achievementId)
                 .findFirst();
         return readAchievement;
+    }
+
+    public void update(Achievement updateAchievement){
+        achievements = achievements.stream()
+                .filter(achievement -> achievement.getId() == updateAchievement.getId())
+                .map(achievement -> updateAchievement)
+                .toList();
     }
 }

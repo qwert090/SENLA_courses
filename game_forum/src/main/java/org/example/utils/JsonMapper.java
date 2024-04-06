@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class Json {
+public class JsonMapper {
     private final ObjectMapper objectMapper;
 
     public <T> T deserialize(String json, Class<T> tClass){

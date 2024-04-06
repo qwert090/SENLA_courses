@@ -2,6 +2,7 @@ package org.example.repository;
 
 import lombok.Getter;
 import org.example.entity.Role;
+import org.example.entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -28,6 +29,13 @@ public class RoleRepository {
     public void delete(long roleId){
         roles = roles.stream()
                 .filter(role -> role.getId() != roleId)
+                .toList();
+    }
+
+    public void update(Role updateRole){
+        roles = roles.stream()
+                .filter(role -> role.getId() == updateRole.getId())
+                .map(role -> updateRole)
                 .toList();
     }
 }

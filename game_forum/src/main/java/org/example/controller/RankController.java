@@ -3,14 +3,14 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.RankDto;
 import org.example.service.serviceInterface.RankService;
-import org.example.utils.Json;
+import org.example.utils.JsonMapper;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class RankController {
     private final RankService rankService;
-    private final Json json;
+    private final JsonMapper json;
 
     public void createRank(String serializedRank){
         RankDto rankDto = json.deserialize(serializedRank, RankDto.class);

@@ -6,14 +6,14 @@ import org.example.entity.Comment;
 import org.example.exception.EntityNotFoundException;
 import org.example.repository.CommentRepository;
 import org.example.service.serviceInterface.CommentService;
-import org.example.utils.Mapper;
+import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
-    private final Mapper mapper;
+    private final CustomMapper mapper;
 
     @Override
     public void createComment(CommentDto commentDto) {
@@ -41,8 +41,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void updateComment(CommentDto commentDto) {
-        Comment comment = commentRepository.read(commentDto.getId())
+        commentRepository.read(commentDto.getId())
                 .orElseThrow(() -> new EntityNotFoundException("no such comment"));
-        comment.setValue(commentDto.getValue());
+        Comment updateComment = mapper.toEntity(Comment.class, commentDto);
+        commentRepository.update(updateComment);
     }
 }

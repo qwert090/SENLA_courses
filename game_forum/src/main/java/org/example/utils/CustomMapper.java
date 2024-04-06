@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class Mapper {
+public class CustomMapper {
     private final ModelMapper modelMapper;
 
     public <D> D toDto(Class<D> dto, Object entity){

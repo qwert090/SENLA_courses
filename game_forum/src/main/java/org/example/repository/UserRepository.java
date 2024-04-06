@@ -29,4 +29,11 @@ public class UserRepository {
                 .findFirst();
         return readUser;
     }
+
+    public void update(User updateUser){
+         users = users.stream()
+                 .filter(user -> user.getId() == updateUser.getId())
+                 .map(user -> updateUser)
+                 .toList();
+    }
 }

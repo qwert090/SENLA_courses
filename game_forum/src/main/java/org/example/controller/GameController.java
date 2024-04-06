@@ -3,14 +3,14 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.GameDto;
 import org.example.service.serviceInterface.GameService;
-import org.example.utils.Json;
+import org.example.utils.JsonMapper;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class GameController {
     private final GameService gameService;
-    private final Json json;
+    private final JsonMapper json;
 
     public void createGame(String serializedGame){
         GameDto gameDto = json.deserialize(serializedGame, GameDto.class);

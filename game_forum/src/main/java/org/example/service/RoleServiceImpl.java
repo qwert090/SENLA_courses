@@ -6,14 +6,14 @@ import org.example.entity.Role;
 import org.example.exception.EntityNotFoundException;
 import org.example.repository.RoleRepository;
 import org.example.service.serviceInterface.RoleService;
-import org.example.utils.Mapper;
+import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
-    private final Mapper mapper;
+    private final CustomMapper mapper;
 
     @Override
     public void createRole(RoleDto roleDto) {
@@ -39,9 +39,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void updateRole(RoleDto roleDto) {
-        Role role = roleRepository.read(roleDto.getId())
+        roleRepository.read(roleDto.getId())
                 .orElseThrow(() -> new EntityNotFoundException("no such role"));
-        role.setName(roleDto.getName());
-        role.setDescription(roleDto.getDescription());
+        Role updateRole = mapper.toEntity(Role.class, roleDto);
+        roleRepository.update(updateRole);
     }
 }

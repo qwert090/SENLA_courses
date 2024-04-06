@@ -2,6 +2,7 @@ package org.example.repository;
 
 import lombok.Getter;
 import org.example.entity.Game;
+import org.example.entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -27,6 +28,13 @@ public class GameRepository {
     public void delete(long gameId){
         games = games.stream()
                 .filter(game -> game.getId() != gameId)
+                .toList();
+    }
+
+    public void update(Game updateGame){
+        games = games.stream()
+                .filter(game -> game.getId() == updateGame.getId())
+                .map(game -> updateGame)
                 .toList();
     }
 }

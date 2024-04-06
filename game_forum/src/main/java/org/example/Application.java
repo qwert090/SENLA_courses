@@ -54,6 +54,8 @@ public class Application {
         userController.createUser(serializedUser2);
         userController.getById(2);
         userController.deleteById(2);
+        userController.updateUser(serializedUserUpdate);
+        userController.getById(1);
         String serializedRole1 = """
                 {
                 "id":1,

@@ -6,14 +6,14 @@ import org.example.entity.Rank;
 import org.example.exception.EntityNotFoundException;
 import org.example.repository.RankRepository;
 import org.example.service.serviceInterface.RankService;
-import org.example.utils.Mapper;
+import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class RankServiceImpl implements RankService {
     private final RankRepository rankRepository;
-    private final Mapper mapper;
+    private final CustomMapper mapper;
 
     @Override
     public void createRank(RankDto rankDto) {
@@ -41,9 +41,9 @@ public class RankServiceImpl implements RankService {
 
     @Override
     public void updateRank(RankDto rankDto) {
-        Rank rank = rankRepository.read(rankDto.getId())
+        rankRepository.read(rankDto.getId())
                 .orElseThrow(() -> new EntityNotFoundException("no such rank"));
-        rank.setName(rankDto.getName());
-        rank.setDescription(rankDto.getDescription());
+        Rank updateRank = mapper.toEntity(Rank.class, rankDto);
+        rankRepository.update(updateRank);
     }
 }

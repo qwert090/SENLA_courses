@@ -6,14 +6,14 @@ import org.example.entity.Post;
 import org.example.exception.EntityNotFoundException;
 import org.example.repository.PostRepository;
 import org.example.service.serviceInterface.PostService;
-import org.example.utils.Mapper;
+import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
-    private final Mapper mapper;
+    private final CustomMapper mapper;
 
     @Override
     public void createPost(PostDto postDto) {
@@ -41,8 +41,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void updatePost(PostDto postDto) {
-        Post post = postRepository.read(postDto.getId())
+        postRepository.read(postDto.getId())
                 .orElseThrow(() -> new EntityNotFoundException("no such post"));
-        post.setValue(postDto.getValue());
+        Post updatePost = mapper.toEntity(Post.class, postDto);
+        postRepository.update(updatePost);
     }
 }

@@ -3,14 +3,14 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.AchievementRequestDto;
 import org.example.service.serviceInterface.AchievementRequestService;
-import org.example.utils.Json;
+import org.example.utils.JsonMapper;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class AchievementRequestController {
     private final AchievementRequestService achievementRequestService;
-    private final Json json;
+    private final JsonMapper json;
 
     public void createAchievementRequest(String serializedAchievementRequest){
         AchievementRequestDto achievementRequestDto = json.deserialize(serializedAchievementRequest, AchievementRequestDto.class);

@@ -2,6 +2,7 @@ package org.example.repository;
 
 import lombok.Getter;
 import org.example.entity.Rank;
+import org.example.entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -27,6 +28,13 @@ public class RankRepository {
     public void delete(long rankId){
         ranks = ranks.stream()
                 .filter(rank -> rank.getId() != rankId)
+                .toList();
+    }
+
+    public void update(Rank updateRank){
+        ranks = ranks.stream()
+                .filter(rank -> rank.getId() == updateRank.getId())
+                .map(rank -> updateRank)
                 .toList();
     }
 }

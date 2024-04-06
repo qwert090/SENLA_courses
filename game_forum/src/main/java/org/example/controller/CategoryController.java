@@ -3,14 +3,14 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.CategoryDto;
 import org.example.service.serviceInterface.CategoryService;
-import org.example.utils.Json;
+import org.example.utils.JsonMapper;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
-    private final Json json;
+    private final JsonMapper json;
 
     public void createCategory(String serializedCategory){
         CategoryDto categoryDto = json.deserialize(serializedCategory, CategoryDto.class);

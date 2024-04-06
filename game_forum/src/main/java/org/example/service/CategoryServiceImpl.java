@@ -6,14 +6,14 @@ import org.example.entity.Category;
 import org.example.exception.EntityNotFoundException;
 import org.example.repository.CategoryRepository;
 import org.example.service.serviceInterface.CategoryService;
-import org.example.utils.Mapper;
+import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
-    private final Mapper mapper;
+    private final CustomMapper mapper;
 
     @Override
     public void createCategory(CategoryDto categoryDto) {
@@ -41,9 +41,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void updateCategory(CategoryDto categoryDto) {
-        Category category = categoryRepository.read(categoryDto.getId())
+        categoryRepository.read(categoryDto.getId())
                 .orElseThrow(() -> new EntityNotFoundException("no such category"));
-        category.setName(categoryDto.getName());
-        category.setDescription(categoryDto.getDescription());
+        Category updateCategory = mapper.toEntity(Category.class, categoryDto);
+        categoryRepository.update(updateCategory);
     }
 }

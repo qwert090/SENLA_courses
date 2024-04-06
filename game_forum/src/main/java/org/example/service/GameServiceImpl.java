@@ -6,14 +6,14 @@ import org.example.entity.Game;
 import org.example.exception.EntityNotFoundException;
 import org.example.repository.GameRepository;
 import org.example.service.serviceInterface.GameService;
-import org.example.utils.Mapper;
+import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class GameServiceImpl implements GameService {
     private final GameRepository gameRepository;
-    private final Mapper mapper;
+    private final CustomMapper mapper;
 
     @Override
     public void createGame(GameDto gameDto) {
@@ -40,8 +40,9 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void updateGame(GameDto gameDto) {
-        Game game = gameRepository.read(gameDto.getId())
+        gameRepository.read(gameDto.getId())
                 .orElseThrow(() -> new EntityNotFoundException("no such game"));
-        game.setName(gameDto.getName());
+        Game updateGame = mapper.toEntity(Game.class, gameDto);
+        gameRepository.update(updateGame);
     }
 }

@@ -6,14 +6,14 @@ import org.example.entity.Achievement;
 import org.example.exception.EntityNotFoundException;
 import org.example.repository.AchievementRepository;
 import org.example.service.serviceInterface.AchievementService;
-import org.example.utils.Mapper;
+import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class AchievementServiceImpl implements AchievementService {
     private final AchievementRepository achievementRepository;
-    private final Mapper mapper;
+    private final CustomMapper mapper;
 
     @Override
     public void createAchievement(AchievementDto achievementDto) {
@@ -41,13 +41,9 @@ public class AchievementServiceImpl implements AchievementService {
 
     @Override
     public void updateAchievement(AchievementDto achievementDto) {
-        Achievement achievement = achievementRepository.read(achievementDto.getId())
+        achievementRepository.read(achievementDto.getId())
                 .orElseThrow(() -> new EntityNotFoundException("no such achievement"));
-        achievement.setName(achievementDto.getName());
-        achievement.setCondition(achievementDto.getCondition());
-        achievement.setPlatform(achievementDto.getPlatform());
-        achievement.setAchievementExperience(achievementDto.getAchievementExperience());
-        achievement.setType(achievementDto.getType());
-
+        Achievement updateAchievement = mapper.toEntity(Achievement.class, achievementDto);
+        achievementRepository.update(updateAchievement);
     }
 }

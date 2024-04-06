@@ -2,6 +2,7 @@ package org.example.repository;
 
 import lombok.Getter;
 import org.example.entity.Category;
+import org.example.entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -28,5 +29,12 @@ public class CategoryRepository {
                 .filter(id -> id.getId() == categoryId)
                 .findFirst();
         return readCategory;
+    }
+
+    public void update(Category updateCategory){
+        categories = categories.stream()
+                .filter(category -> category.getId() == updateCategory.getId())
+                .map(category -> updateCategory)
+                .toList();
     }
 }

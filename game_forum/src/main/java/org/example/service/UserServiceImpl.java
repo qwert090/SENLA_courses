@@ -6,14 +6,14 @@ import org.example.entity.User;
 import org.example.exception.EntityNotFoundException;
 import org.example.repository.UserRepository;
 import org.example.service.serviceInterface.UserService;
-import org.example.utils.Mapper;
+import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final Mapper mapper;
+    private final CustomMapper mapper;
 
     @Override
     public void createUser(UserDto userDto) {
@@ -39,11 +39,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(UserDto userDto){
-        User user = userRepository.read(userDto.getId())
+        userRepository.read(userDto.getId())
                 .orElseThrow(() -> new EntityNotFoundException("no such user"));
-        user.setNickname(userDto.getNickname());
-        user.setDescription(userDto.getDescription());
-        user.setAvatar(userDto.getAvatar());
-        user.setTotalExp(userDto.getTotalExp());
+        User updateUser = mapper.toEntity(User.class, userDto);
+        userRepository.update(updateUser);
     }
 }
