@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>   
+<databaseChangeLog
+   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+      http://www.liquibase.org/xml/ns/pro 
+      http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd"
+      logicalFilePath="homework-2">  
+
+    <changeSet id="homework-2-rank" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/01.create-rank-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-credentials" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/02.create-credentials-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-user" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/03.create-user-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-role" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/04.create-role-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-post" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/05.create-post-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-category" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/06.create-category-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-game" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/07.create-game-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-achievement" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/08.create-achievement-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-user_achievements" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/09.create-user_achievements-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-achievement_requests" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/10.create-achievement_requests-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-follower" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/11.create-follower-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-user_role" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/12.create-user_role-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-comment" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/13.create-comment-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-post_category" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/14.create-post_category-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-game_category" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/15.create-game_category-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-rank_id_index" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/16.create-rank_id_index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-achievement_request_user_id_index" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/17.create-achievement_request_user_id_index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-credentials_id_index" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/18.create-credentials_id_index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-post_user_id_index" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/19.create-post_user_id_index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-comment_user_id_index" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/20.crate-comment_user_id_index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-parent_comment_id_index" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/21.create-parent_comment_id_index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-post_id_index" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/22.create-post_id_index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-game_id_index" author="Vladimir">
+        <sqlFile encoding="utf8" path="./sql/23.create-game_id_index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+</databaseChangeLog> 
