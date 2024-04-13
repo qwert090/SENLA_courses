@@ -58,12 +58,12 @@ public class UserRepository {
 
     public void update(User updateUser) {
         String sqlRequest = """
-            UPDATE users
-            SET nickname = ?,
+            update users
+            set nickname = ?,
                 description = ?,
                 avatar = ?,
                 total_experience = ?
-            WHERE id = ?
+            where id = ?
             """;
         try (Connection connection = connectionHolder.getConnection();
              PreparedStatement statement = connection.prepareStatement(sqlRequest)) {
