@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.example.dto.UserDto;
 import org.example.service.serviceInterface.UserService;
 import org.example.utils.JsonMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
-@Component
+@Controller
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
