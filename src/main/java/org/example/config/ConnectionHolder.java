@@ -31,7 +31,7 @@ public class ConnectionHolder {
     public Connection getConnection(){
         String threadName =  Thread.currentThread().getName();
         try {
-            if (connectionMap.containsKey(threadName)){
+            if (connectionMap.containsKey(threadName) && !connectionMap.get(threadName).isClosed()){
                 return connectionMap.get(threadName);
             }
             Connection connection = null;
