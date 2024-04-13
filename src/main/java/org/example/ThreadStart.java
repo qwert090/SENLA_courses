@@ -21,6 +21,14 @@ public class ThreadStart implements Runnable{
                     "totalExp": 1000000
                 }
                 """);
-        System.out.println(userController.getById(1));
+        System.out.println(userController.getById(1).toString());
+        userController.updateUser("""
+                {
+                    "nickname": "Вася",
+                    "description": "Cool",
+                    "avatar": "pic",
+                    "totalExp": 1000000
+                }
+                """);
     }
 }

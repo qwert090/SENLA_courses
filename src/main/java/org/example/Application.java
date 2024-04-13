@@ -11,8 +11,8 @@ public class Application {
         UserController userController = context.getBean(UserController.class);
         ConnectionHolder connectionHolder = context.getBean(ConnectionHolder.class);
         for (int i = 0; i < 10; i++) {
-            ThreadStart threadStart = new ThreadStart(userController, i);
-            threadStart.run();
+            Thread threadStart = new Thread(new ThreadStart(userController, i));
+            threadStart.start();
         }
         context.close();
         /*

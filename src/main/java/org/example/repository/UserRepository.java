@@ -7,9 +7,7 @@ import org.example.entity.User;
 import org.example.utils.UserMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 @Repository
 @Getter
@@ -23,9 +21,9 @@ public class UserRepository {
                 insert into users (nickname, description, avatar, total_experience)
                 values('%s', '%s', '%s', '%d');
                 """.formatted(
-                        user.getNickname(), user.getDescription(), user.getAvatar(), user.getTotalExp()
+                user.getNickname(), user.getDescription(), user.getAvatar(), user.getTotalExp()
         );
-        try(Statement statement = connectionHolder.getConnection().createStatement()) {
+        try (Statement statement = connectionHolder.getConnection().createStatement()) {
             statement.execute(sqlRequest);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -37,7 +35,7 @@ public class UserRepository {
         String sqlRequest = """
                 delete from users where id = '%d';
                 """.formatted(userId);
-        try(Statement statement = connectionHolder.getConnection().createStatement()) {
+        try (Statement statement = connectionHolder.getConnection().createStatement()) {
             statement.execute(sqlRequest);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -49,7 +47,7 @@ public class UserRepository {
         String sqlRequest = """
                 select * from users where id = '%d';
                 """.formatted(userId);
-        try(Statement statement = connectionHolder.getConnection().createStatement()) {
+        try (Statement statement = connectionHolder.getConnection().createStatement()) {
             ResultSet resultSet = statement.executeQuery(sqlRequest);
             user = userMapper.toUser(resultSet);
         } catch (SQLException e) {
@@ -58,21 +56,26 @@ public class UserRepository {
         return user;
     }
 
-    public void update(User updateUser){
-         String sqlRequest = """
-                 update users
-                    set nickname = '%s',
-                    set description = '%s',
-                    set avatar = '%s',
-                    set total_experience = '%d'
-                 where id = '%d'
-                 """.formatted(
-                         updateUser.getNickname(), updateUser.getDescription(), updateUser.getAvatar(), updateUser.getTotalExp(), updateUser.getId()
-                                );
-         try(Statement statement = connectionHolder.getConnection().createStatement()) {
-             statement.execute(sqlRequest);
-         } catch (SQLException e) {
-             throw new RuntimeException(e);
-         }
+    public void update(User updateUser) {
+        String sqlRequest = """
+            UPDATE users
+            SET nickname = ?,
+                description = ?,
+                avatar = ?,
+                total_experience = ?
+            WHERE id = ?
+            """;
+        try (Connection connection = connectionHolder.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sqlRequest)) {
+            statement.setString(1, updateUser.getNickname());
+            statement.setString(2, updateUser.getDescription());
+            statement.setString(3, updateUser.getAvatar());
+            statement.setInt(4, updateUser.getTotalExp());
+            statement.setLong(5, updateUser.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 }

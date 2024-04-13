@@ -54,7 +54,7 @@ public class ConnectionHolder {
     public void rollback() {
         try {
             String threadName = Thread.currentThread().getName();
-            Connection connection = connectionMap.remove(threadName);
+            Connection connection = connectionMap.get(threadName);
             connection.rollback();
             freeConnections.add(connection);
         } catch (SQLException e) {
@@ -65,7 +65,7 @@ public class ConnectionHolder {
     public void commit() {
         try {
             String threadName = Thread.currentThread().getName();
-            Connection connection = connectionMap.remove(threadName);
+            Connection connection = connectionMap.get(threadName);
             connection.commit();
             freeConnections.add(connection);
         } catch (SQLException e) {

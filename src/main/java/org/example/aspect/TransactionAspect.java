@@ -49,8 +49,8 @@ public class TransactionAspect {
         }
     }
 
-    @After("pointcut()")
-    public void after(){
-        connectionHolder.close();
-    }
+//    @After("pointcut()")
+//    public void after(){
+//        connectionHolder.close();
+//    }
 }
