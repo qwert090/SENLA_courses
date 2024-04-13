@@ -5,8 +5,9 @@ import org.example.dto.UserDto;
 import org.example.service.serviceInterface.UserService;
 import org.example.utils.JsonMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;

@@ -15,7 +15,6 @@ public class ThreadStart implements Runnable{
     public void run(){
         userController.createUser("""
                 {
-                    "id": 1,
                     "nickname": "ALLAH",
                     "description": "Cool",
                     "avatar": "pic",

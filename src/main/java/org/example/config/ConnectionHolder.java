@@ -13,8 +13,8 @@ import java.util.Map;
 
 @Component
 public class ConnectionHolder {
-    private Map<String, Connection> connectionMap;
-    private List<Connection> freeConnections;
+    private final Map<String, Connection> connectionMap;
+    private final List<Connection> freeConnections;
 
     @Value("${db.url}")
     private String url;
