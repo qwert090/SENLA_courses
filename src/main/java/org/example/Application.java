@@ -1,17 +1,21 @@
 package org.example;
 
-import org.example.controller.*;
+import org.example.config.ApplicationConfig;
+import org.example.config.ConnectionHolder;
+import org.example.controller.UserController;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-
-@ComponentScan
-@Configuration
 
 public class Application {
-
     public static void main(String[] args){
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
+        UserController userController = context.getBean(UserController.class);
+        ConnectionHolder connectionHolder = context.getBean(ConnectionHolder.class);
+        for (int i = 0; i < 10; i++) {
+            Thread threadStart = new Thread(new ThreadStart(userController, i));
+            threadStart.start();
+        }
+        context.close();
+        /*
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Application.class);
         UserController userController = context.getBean(UserController.class);
         RoleController roleController = context.getBean(RoleController.class);
@@ -274,5 +278,6 @@ public class Application {
         achievementController.getById(2);
         achievementController.deleteById(2);
         achievementController.updateAchievement(serializedAchievementUpdate);
+        */
     }
 }

@@ -17,12 +17,16 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>1.9.22</version>
-            <scope>runtime</scope>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>6.1.6</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>1.9.22</version>
+        </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -75,27 +79,7 @@
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>4.26.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>update</goal>
-                        </goals>
-                        <phase>install</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <changeLogFile>src/main/changeLogFile/changelog.xml</changeLogFile>
-                    <url>jdbc:postgresql://localhost:5555/game_forum</url>
-                    <username>postgres</username>
-                    <password>admin</password>
-                </configuration>
-            </plugin>
-        </plugins>
+
     </build>
 
 </project>

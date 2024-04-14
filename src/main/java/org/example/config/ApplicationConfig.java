@@ -5,12 +5,8 @@ import liquibase.integration.spring.SpringLiquibase;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.postgresql.ds.PGSimpleDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 
 import javax.sql.DataSource;
 
@@ -19,6 +15,7 @@ import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 @PropertySource("classpath:application.properties")
 @Configuration
 @EnableAspectJAutoProxy
+@ComponentScan("org.example")
 public class ApplicationConfig {
 
     @Bean
@@ -43,8 +40,6 @@ public class ApplicationConfig {
         private String username;
         @Value("${db.password}")
         private String password;
-        @Autowired
-        private DataSource dataSource;
 
         @Bean
         public DataSource dataSource(){
@@ -58,9 +53,8 @@ public class ApplicationConfig {
         @Bean
         public SpringLiquibase springLiquibase() {
             SpringLiquibase springLiquibase = new SpringLiquibase();
-            springLiquibase.setDataSource(dataSource);
+            springLiquibase.setDataSource(dataSource());
             springLiquibase.setChangeLog("changelog.xml");
             return springLiquibase;
     }
 }
-
