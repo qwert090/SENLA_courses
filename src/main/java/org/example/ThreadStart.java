@@ -12,7 +12,7 @@ public class ThreadStart implements Runnable{
     }
 
     @Override
-    public synchronized void  run(){
+    public synchronized void run(){
         userController.createUser("""
                 {
                     "nickname": "ALLAH",
