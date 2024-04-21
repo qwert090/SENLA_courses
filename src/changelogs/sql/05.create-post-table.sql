@@ -1,8 +1,8 @@
 CREATE TABLE post
 (
     id bigserial NOT NULL, 
-    value varchar(500) NOT NULL, 
-    user_id bigint NOT NULL,
+    content varchar(500),
+    users_id bigint,
     PRIMARY KEY (id),
-    FOREIGN KEY (user_id) references users(id)
+    FOREIGN KEY (users_id) references users(id)
 );

@@ -3,7 +3,6 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.PostDto;
 import org.example.entity.Post;
-import org.example.exception.EntityNotFoundException;
 import org.example.repository.PostRepository;
 import org.example.service.serviceInterface.PostService;
 import org.example.utils.CustomMapper;
@@ -18,31 +17,25 @@ public class PostServiceImpl implements PostService {
     @Override
     public void createPost(PostDto postDto) {
         Post post = mapper.toEntity(Post.class, postDto);
-        postRepository.create(post);
+        postRepository.save(post);
 
     }
 
     @Override
     public void deleteById(long id) {
-        postRepository.delete(id);
+        postRepository.deleteById(id);
 
     }
 
     @Override
     public PostDto getById(long id) {
-        Post post = postRepository.read(id)
-                .orElseThrow(() -> new EntityNotFoundException("no such post"));
-        System.out.println(postRepository.getPosts().stream()
-                .filter(post1 -> post1.getId() == id)
-                .toList()
-        );
+        Post post = postRepository.findById(id);
         return mapper.toDto(PostDto.class, post);
     }
 
     @Override
     public void updatePost(PostDto postDto) {
-        postRepository.read(postDto.getId())
-                .orElseThrow(() -> new EntityNotFoundException("no such post"));
+        postRepository.findById(postDto.getId());
         Post updatePost = mapper.toEntity(Post.class, postDto);
         postRepository.update(updatePost);
     }

@@ -1,39 +1,27 @@
 package org.example.repository;
 
+import jakarta.persistence.EntityGraph;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
-import org.example.entity.Comment;
+import org.example.entity.Comments;
 import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Getter
-public class CommentRepository {
-    private List<Comment> comments = new ArrayList<>();
+public class CommentRepository extends AbstractRepository<Comments, Long> {
 
-    public void create(Comment user){
-        comments.add(user);
+    public CommentRepository(EntityManager entityManager, CriteriaBuilder criteriaBuilder) {
+        super(entityManager, Comments.class, criteriaBuilder);
     }
 
-    public void delete(long commentId){
-        comments = comments.stream()
-                .filter(comment -> comment.getId() != commentId)
-                .toList();
-    }
-
-    public Optional<Comment> read(long commentId){
-        Optional<Comment> readComments = comments.stream()
-                .filter(id -> id.getId() == commentId)
-                .findFirst();
-        return readComments;
-    }
-
-    public void update(Comment updateComment){
-        comments = comments.stream()
-                .filter(comment -> comment.getId() == updateComment.getId())
-                .map(comment -> updateComment)
-                .toList();
+    @Override
+    public Comments findById(Long id) {
+        EntityGraph<Comments> entityGraph = entityManager.createEntityGraph(Comments.class);
+        TypedQuery<Comments> typedQuery = entityManager.createQuery("SELECT c FROM Comments c", Comments.class);
+        entityGraph.addAttributeNodes("user", "post");
+        typedQuery.setHint("jakarta.persistence.loadgraph", entityGraph);
+        return typedQuery.getSingleResult();
     }
 }

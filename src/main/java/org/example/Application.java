@@ -1,22 +1,12 @@
 package org.example;
 
 import org.example.config.ApplicationConfig;
-import org.example.config.ConnectionHolder;
-import org.example.controller.UserController;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Application {
     public static void main(String[] args){
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
-        UserController userController = context.getBean(UserController.class);
-        ConnectionHolder connectionHolder = context.getBean(ConnectionHolder.class);
-        for (int i = 0; i < 10; i++) {
-            Thread threadStart = new Thread(new ThreadStart(userController, i));
-            threadStart.start();
-        }
-        context.close();
         /*
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Application.class);
         UserController userController = context.getBean(UserController.class);
         RoleController roleController = context.getBean(RoleController.class);
         RankController rankController = context.getBean(RankController.class);

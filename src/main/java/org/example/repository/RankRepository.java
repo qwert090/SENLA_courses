@@ -1,39 +1,25 @@
 package org.example.repository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import org.example.entity.Rank;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 @Repository
 @Getter
-public class RankRepository {
-    private List<Rank> ranks = new ArrayList<>();
+public class RankRepository extends AbstractRepository<Rank, Long> {
 
-    public void create(Rank rank){
-        ranks.add(rank);
+
+    public RankRepository(EntityManager entityManager, CriteriaBuilder criteriaBuilder) {
+        super(entityManager, Rank.class, criteriaBuilder);
     }
 
-    public Optional<Rank> read(long rankId){
-        Optional<Rank> readRank = ranks.stream()
-                .filter(id -> id.getId() == rankId)
-                .findFirst();
-        return readRank;
-    }
-
-    public void delete(long rankId){
-        ranks = ranks.stream()
-                .filter(rank -> rank.getId() != rankId)
-                .toList();
-    }
-
-    public void update(Rank updateRank){
-        ranks = ranks.stream()
-                .filter(rank -> rank.getId() == updateRank.getId())
-                .map(rank -> updateRank)
-                .toList();
+    @Override
+    public Rank findById(Long id){
+        TypedQuery<Rank> userTypedQuery = entityManager.createQuery("SELECT r  FROM Rank r WHERE r.id = :id", Rank.class)
+                .setParameter("id", id);
+        return userTypedQuery.getSingleResult();
     }
 }

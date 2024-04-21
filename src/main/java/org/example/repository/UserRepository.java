@@ -1,75 +1,26 @@
 package org.example.repository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import org.example.config.ConnectionHolder;
-import org.example.entity.User;
-import org.example.utils.UserMapper;
+import org.example.entity.Users;
 import org.springframework.stereotype.Repository;
-
-import java.sql.*;
 
 @Repository
 @Getter
-@RequiredArgsConstructor
-public class UserRepository {
-    private final ConnectionHolder connectionHolder;
-    private final UserMapper userMapper;
+public class UserRepository extends AbstractRepository<Users, Long> {
 
-    public void create(User user) {
-        String sqlRequest = "insert into users (nickname, description, avatar, total_experience) values (?, ?, ?, ?)";
-        try (PreparedStatement statement = connectionHolder.getConnection().prepareStatement(sqlRequest)) {
-            statement.setString(1, user.getNickname());
-            statement.setString(2, user.getDescription());
-            statement.setString(3, user.getAvatar());
-            statement.setInt(4, user.getTotalExp());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public UserRepository(EntityManager entityManager, CriteriaBuilder criteriaBuilder) {
+        super(entityManager, Users.class, criteriaBuilder);
     }
 
-    public void delete(long userId) {
-        String sqlRequest = "delete * from users where id = ?";
-        try (PreparedStatement statement = connectionHolder.getConnection().prepareStatement(sqlRequest)) {
-            statement.setLong(1, userId);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public User read(long userId) {
-        User user = new User();
-        String sqlRequest = "select * from users where id = ?";
-        try (PreparedStatement statement = connectionHolder.getConnection().prepareStatement(sqlRequest)) {
-            statement.setLong(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            user = userMapper.toUser(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return user;
-    }
-
-    public void update(User updateUser) {
-        String sqlRequest = """
-            update users
-            set nickname = ?,
-                description = ?,
-                avatar = ?,
-                total_experience = ?
-            where id = ?
-            """;
-        try (PreparedStatement statement = connectionHolder.getConnection().prepareStatement(sqlRequest)) {
-            statement.setString(1, updateUser.getNickname());
-            statement.setString(2, updateUser.getDescription());
-            statement.setString(3, updateUser.getAvatar());
-            statement.setInt(4, updateUser.getTotalExp());
-            statement.setLong(5, updateUser.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    @Override
+    public Users findById(Long id) {
+        CriteriaQuery<Users> criteriaQuery = criteriaBuilder.createQuery(Users.class);
+        Root<Users> root = criteriaQuery.from(Users.class);
+        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("id"), id));
+        return entityManager.createQuery(criteriaQuery).getSingleResult();
     }
 }

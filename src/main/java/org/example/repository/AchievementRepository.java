@@ -1,39 +1,27 @@
 package org.example.repository;
 
+import jakarta.persistence.EntityGraph;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import org.example.entity.Achievement;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 @Repository
 @Getter
-public class AchievementRepository {
-    private List<Achievement> achievements = new ArrayList<>();
+public class AchievementRepository extends AbstractRepository<Achievement, Long> {
 
-    public void create(Achievement achievement){
-        achievements.add(achievement);
+    public AchievementRepository(EntityManager entityManager, CriteriaBuilder criteriaBuilder) {
+        super(entityManager, Achievement.class, criteriaBuilder);
     }
 
-    public void delete(long achievementId){
-        achievements = achievements.stream()
-                .filter(achievement -> achievement.getId() != achievementId)
-                .toList();
-    }
-
-    public Optional<Achievement> read(long achievementId){
-        Optional<Achievement> readAchievement = achievements.stream()
-                .filter(id -> id.getId() == achievementId)
-                .findFirst();
-        return readAchievement;
-    }
-
-    public void update(Achievement updateAchievement){
-        achievements = achievements.stream()
-                .filter(achievement -> achievement.getId() == updateAchievement.getId())
-                .map(achievement -> updateAchievement)
-                .toList();
+    @Override
+    public Achievement findById(Long id) {
+        EntityGraph<Achievement> entityGraph = entityManager.createEntityGraph(Achievement.class);
+        TypedQuery<Achievement> typedQuery = entityManager.createQuery("SELECT a FROM Achievement a", Achievement.class);
+        entityGraph.addAttributeNodes("game");
+        typedQuery.setHint("jakarta.persistence.loadgraph", entityGraph);
+        return typedQuery.getSingleResult();
     }
 }

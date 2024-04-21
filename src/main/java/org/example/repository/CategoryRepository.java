@@ -1,39 +1,25 @@
 package org.example.repository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import org.example.entity.Category;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 @Repository
 @Getter
-public class CategoryRepository {
-    private List<Category> categories = new ArrayList<>();
+public class CategoryRepository extends AbstractRepository<Category, Long> {
 
-    public void create(Category category){
-        categories.add(category);
+
+    public CategoryRepository(EntityManager entityManager, CriteriaBuilder criteriaBuilder) {
+        super(entityManager, Category.class, criteriaBuilder);
     }
 
-    public void delete(long categoryId){
-        categories = categories.stream()
-                .filter(category -> category.getId() != categoryId)
-                .toList();
-    }
-
-    public Optional<Category> read(long categoryId){
-        Optional<Category> readCategory = categories.stream()
-                .filter(id -> id.getId() == categoryId)
-                .findFirst();
-        return readCategory;
-    }
-
-    public void update(Category updateCategory){
-        categories = categories.stream()
-                .filter(category -> category.getId() == updateCategory.getId())
-                .map(category -> updateCategory)
-                .toList();
+    @Override
+    public Category findById(Long id){
+        TypedQuery<Category> userTypedQuery = entityManager.createQuery("SELECT c  FROM Category c WHERE c.id = :id", Category.class)
+                .setParameter("id", id);
+        return userTypedQuery.getSingleResult();
     }
 }

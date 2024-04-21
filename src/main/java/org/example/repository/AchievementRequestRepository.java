@@ -1,39 +1,29 @@
 package org.example.repository;
 
+import jakarta.persistence.EntityGraph;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import org.example.entity.AchievementRequest;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 @Repository
 @Getter
-public class AchievementRequestRepository {
-    private List<AchievementRequest> achievementRequests = new ArrayList<>();
+public class AchievementRequestRepository extends AbstractRepository<AchievementRequest, Long> {
 
-    public void create(AchievementRequest achievementRequest){
-        achievementRequests.add(achievementRequest);
+    public AchievementRequestRepository(EntityManager entityManager, CriteriaBuilder criteriaBuilder) {
+        super(entityManager, AchievementRequest.class, criteriaBuilder);
     }
 
-    public void delete(long achievementRequestId){
-        achievementRequests = achievementRequests.stream()
-                .filter(achievementRequest -> achievementRequest.getId() != achievementRequestId)
-                .toList();
-    }
-
-    public Optional<AchievementRequest> read(long achievementRequestId){
-        Optional<AchievementRequest> readAchievementRequest = achievementRequests.stream()
-                .filter(id -> id.getId() == achievementRequestId)
-                .findFirst();
-        return readAchievementRequest;
-    }
-
-    public void update(AchievementRequest updateAchievementRequest){
-        achievementRequests = achievementRequests.stream()
-                .filter(achievementRequest -> achievementRequest.getId() == updateAchievementRequest.getId())
-                .map(achievementRequest -> updateAchievementRequest)
-                .toList();
+    @Override
+    public AchievementRequest findById(Long id) {
+        EntityGraph<AchievementRequest> entityGraph = entityManager.createEntityGraph(AchievementRequest.class);
+        TypedQuery<AchievementRequest> typedQuery = entityManager.createQuery(
+                "SELECT a FROM AchievementRequest a", AchievementRequest.class
+        );
+        entityGraph.addAttributeNodes("users");
+        typedQuery.setHint("jakarta.persistence.loadgraph", entityGraph);
+        return typedQuery.getSingleResult();
     }
 }

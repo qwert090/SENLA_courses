@@ -1,39 +1,26 @@
 package org.example.repository;
 
+import jakarta.persistence.EntityGraph;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import org.example.entity.Post;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 @Repository
 @Getter
-public class PostRepository {
-    private List<Post> posts = new ArrayList<>();
+public class PostRepository extends AbstractRepository<Post, Long> {
 
-    public void create(Post post){
-        posts.add(post);
+    public PostRepository(EntityManager entityManager, CriteriaBuilder criteriaBuilder) {
+        super(entityManager, Post.class, criteriaBuilder);
     }
 
-    public Optional<Post> read(long postId){
-        Optional<Post> readPost = posts.stream()
-                .filter(id -> id.getId() == postId)
-                .findFirst();
-        return readPost;
-    }
-
-    public void delete(long postId){
-        posts = posts.stream()
-                .filter(post -> post.getId() != postId)
-                .toList();
-    }
-
-    public void update(Post updatePost){
-        posts = posts.stream()
-                .filter(post -> post.getId() == updatePost.getId())
-                .map(post -> updatePost)
-                .toList();
+    @Override
+    public Post findById(Long id){
+        EntityGraph<?> postGraph = entityManager.createEntityGraph("postGraph");
+        TypedQuery<Post> typedQuery = entityManager.createQuery("SELECT p FROM Post p", Post.class);
+        typedQuery.setHint("jakarta.persistence.fetchgraph", postGraph);
+        return typedQuery.getSingleResult();
     }
 }

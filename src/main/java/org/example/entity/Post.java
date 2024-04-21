@@ -1,18 +1,26 @@
 package org.example.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.List;
 
 @Getter
 @Setter
-@ToString
-public class Post {
-    private long id;
-    private String value;
-    private User user;
-    private List<Category> categories;
-    private List<Comment> comments;
+@Entity
+@Table(name = "post")
+@NamedEntityGraph(name = "postGraph",
+attributeNodes = {@NamedAttributeNode("users"), @NamedAttributeNode("category")})
+public class Post extends AbstractEntity {
+
+    @Column(name = "content")
+    private String content;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Users users;
+
+    @JoinColumn(name = "category_id")
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Category> category;
 }

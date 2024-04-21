@@ -3,7 +3,6 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.AchievementDto;
 import org.example.entity.Achievement;
-import org.example.exception.EntityNotFoundException;
 import org.example.repository.AchievementRepository;
 import org.example.service.serviceInterface.AchievementService;
 import org.example.utils.CustomMapper;
@@ -18,31 +17,25 @@ public class AchievementServiceImpl implements AchievementService {
     @Override
     public void createAchievement(AchievementDto achievementDto) {
         Achievement achievement = mapper.toEntity(Achievement.class, achievementDto);
-        achievementRepository.create(achievement);
+        achievementRepository.save(achievement);
 
     }
 
     @Override
     public void deleteById(long id) {
-        achievementRepository.delete(id);
+        achievementRepository.deleteById(id);
 
     }
 
     @Override
     public AchievementDto getById(long id) {
-        Achievement achievement = achievementRepository.read(id)
-                .orElseThrow(() -> new EntityNotFoundException("no such achievement"));
-        System.out.println(achievementRepository.getAchievements().stream()
-                .filter(achievement1 -> achievement1.getId() == id)
-                .toList()
-        );
+        Achievement achievement = (Achievement) achievementRepository.findById(id);
         return mapper.toDto(AchievementDto.class, achievement);
     }
 
     @Override
     public void updateAchievement(AchievementDto achievementDto) {
-        achievementRepository.read(achievementDto.getId())
-                .orElseThrow(() -> new EntityNotFoundException("no such achievement"));
+        achievementRepository.findById(achievementDto.getId());
         Achievement updateAchievement = mapper.toEntity(Achievement.class, achievementDto);
         achievementRepository.update(updateAchievement);
     }
