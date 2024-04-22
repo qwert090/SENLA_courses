@@ -1,7 +1,7 @@
 package org.example.utils;
 
 import lombok.RequiredArgsConstructor;
-import org.example.entity.Users;
+import org.example.entity.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +13,8 @@ import java.sql.SQLException;
 public class UserMapper {
     private final ModelMapper modelMapper;
 
-    public Users toUser(ResultSet resultSet){
-        Users user = new Users();
+    public User toUser(ResultSet resultSet){
+        User user = new User();
         try {
             if(resultSet.next()) {
                 user.setId(resultSet.getLong("id"));

@@ -25,6 +25,12 @@ import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 @ComponentScan("org.example")
 @RequiredArgsConstructor
 public class ApplicationConfig {
+    @Value("${db.url}")
+    private String url;
+    @Value("${db.username}")
+    private String username;
+    @Value("${db.password}")
+    private String password;
 
     @Bean
     public ModelMapper modelMapper() {
@@ -41,13 +47,6 @@ public class ApplicationConfig {
     public ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
-
-    @Value("${db.url}")
-    private String url;
-    @Value("${db.username}")
-    private String username;
-    @Value("${db.password}")
-    private String password;
 
     @Bean
     public DataSource dataSource() {

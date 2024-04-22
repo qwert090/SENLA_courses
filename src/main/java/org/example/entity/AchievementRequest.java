@@ -8,7 +8,12 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "achievement_request")
-public class AchievementRequest extends  AbstractEntity {
+public class AchievementRequest {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "game_name")
     private String gameName;
@@ -20,5 +25,5 @@ public class AchievementRequest extends  AbstractEntity {
     private String platform;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Users users;
+    private User users;
 }

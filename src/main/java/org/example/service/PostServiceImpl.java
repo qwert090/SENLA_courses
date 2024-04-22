@@ -3,7 +3,7 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.PostDto;
 import org.example.entity.Post;
-import org.example.repository.PostRepository;
+import org.example.repository.impl.PostRepository;
 import org.example.service.serviceInterface.PostService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;

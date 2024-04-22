@@ -3,7 +3,7 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.GameDto;
 import org.example.entity.Game;
-import org.example.repository.GameRepository;
+import org.example.repository.impl.GameRepository;
 import org.example.service.serviceInterface.GameService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;

@@ -3,8 +3,8 @@ package org.example.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.UserDto;
-import org.example.entity.Users;
-import org.example.repository.UserRepository;
+import org.example.entity.User;
+import org.example.repository.impl.UserRepository;
 import org.example.service.serviceInterface.UserService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
@@ -18,14 +18,14 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void createUser(UserDto userDto) {
-        Users user = mapper.toEntity(Users.class, userDto);
+        User user = mapper.toEntity(User.class, userDto);
         userRepository.save(user);
     }
 
     @Override
     @Transactional
     public UserDto getById(long id) {
-        Users user = userRepository.findById(id);
+        User user = userRepository.findById(id);
         return mapper.toDto(UserDto.class, user);
     }
 
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updateUser(UserDto userDto){
         userRepository.findById(userDto.getId());
-        Users updateUser = mapper.toEntity(Users.class, userDto);
+        User updateUser = mapper.toEntity(User.class, userDto);
         userRepository.update(updateUser);
     }
 }

@@ -1,25 +1,25 @@
-package org.example.repository;
+package org.example.repository.impl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import lombok.Getter;
-import org.example.entity.Users;
+import org.example.entity.User;
+import org.example.repository.impl.AbstractRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Getter
-public class UserRepository extends AbstractRepository<Users, Long> {
+public class UserRepository extends AbstractRepository<User, Long> {
 
     public UserRepository(EntityManager entityManager, CriteriaBuilder criteriaBuilder) {
-        super(entityManager, Users.class, criteriaBuilder);
+        super(entityManager, User.class, criteriaBuilder);
     }
 
     @Override
-    public Users findById(Long id) {
-        CriteriaQuery<Users> criteriaQuery = criteriaBuilder.createQuery(Users.class);
-        Root<Users> root = criteriaQuery.from(Users.class);
+    public User findById(Long id) {
+        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+        Root<User> root = criteriaQuery.from(User.class);
         criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("id"), id));
         return entityManager.createQuery(criteriaQuery).getSingleResult();
     }

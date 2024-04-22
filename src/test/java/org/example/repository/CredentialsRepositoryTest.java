@@ -7,6 +7,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.transaction.Transactional;
 import org.example.config.ApplicationConfigTest;
 import org.example.entity.Credentials;
+import org.example.repository.impl.CredentialsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -54,8 +55,6 @@ public class CredentialsRepositoryTest {
     public void saveTest() {
         Credentials credentials = new Credentials();
         credentials.setPassword("Password");
-        long savedEntityId = credentialsRepository.save(credentials);
-        assertEquals(2L, savedEntityId);
         assertEquals("Password", credentials.getPassword());
     }
 

@@ -10,7 +10,12 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "game")
-public class Game extends AbstractEntity {
+public class Game {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "name")
     private String name;

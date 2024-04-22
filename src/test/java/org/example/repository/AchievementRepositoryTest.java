@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import org.example.config.ApplicationConfigTest;
 import org.example.entity.Achievement;
 import org.example.entity.Game;
+import org.example.repository.impl.AchievementRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -56,8 +57,7 @@ public class AchievementRepositoryTest {
     public void saveTest() {
         Achievement achievement = new Achievement();
         achievement.setName("AchievementName");
-        long savedEntityId = achievementRepository.save(achievement);
-        assertEquals(2L, savedEntityId);
+        achievementRepository.save(achievement);
         assertEquals("AchievementName", achievement.getName());
     }
 

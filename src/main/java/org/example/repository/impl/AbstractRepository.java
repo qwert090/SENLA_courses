@@ -1,4 +1,4 @@
-package org.example.repository;
+package org.example.repository.impl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -7,14 +7,13 @@ import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
-import org.example.entity.AbstractEntity;
-import org.example.repository.interfaces.RepositoryApi;
+import org.example.repository.api.RepositoryApi;
 
 import java.io.Serializable;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class AbstractRepository<T extends AbstractEntity, PK extends Serializable> implements RepositoryApi<T, Long> {
+public class AbstractRepository<T , PK extends Serializable> implements RepositoryApi<T, Long> {
 
     @PersistenceContext
     protected final EntityManager entityManager;
@@ -35,10 +34,9 @@ public class AbstractRepository<T extends AbstractEntity, PK extends Serializabl
     }
 
     @Override
-    public Long save(T entity) {
+    public void save(T entity) {
         entityManager.persist(entity);
         entityManager.flush();
-        return entity.getId();
     }
 
     @Override

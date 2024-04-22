@@ -1,4 +1,4 @@
-package org.example.repository;
+package org.example.repository.impl;
 
 import jakarta.persistence.EntityGraph;
 import jakarta.persistence.EntityManager;
@@ -6,10 +6,10 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import org.example.entity.Achievement;
+import org.example.repository.impl.AbstractRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Getter
 public class AchievementRepository extends AbstractRepository<Achievement, Long> {
 
     public AchievementRepository(EntityManager entityManager, CriteriaBuilder criteriaBuilder) {
@@ -19,9 +19,11 @@ public class AchievementRepository extends AbstractRepository<Achievement, Long>
     @Override
     public Achievement findById(Long id) {
         EntityGraph<Achievement> entityGraph = entityManager.createEntityGraph(Achievement.class);
-        TypedQuery<Achievement> typedQuery = entityManager.createQuery("SELECT a FROM Achievement a", Achievement.class);
+        TypedQuery<Achievement> typedQuery = entityManager.createQuery("SELECT a FROM Achievement a WHERE a.id = :id", Achievement.class);
+        typedQuery.setParameter("id", id);
         entityGraph.addAttributeNodes("game");
         typedQuery.setHint("jakarta.persistence.loadgraph", entityGraph);
         return typedQuery.getSingleResult();
     }
+
 }

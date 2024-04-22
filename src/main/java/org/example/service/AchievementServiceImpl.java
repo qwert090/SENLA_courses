@@ -3,7 +3,7 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.AchievementDto;
 import org.example.entity.Achievement;
-import org.example.repository.AchievementRepository;
+import org.example.repository.impl.AchievementRepository;
 import org.example.service.serviceInterface.AchievementService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;

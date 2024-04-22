@@ -12,13 +12,18 @@ import java.util.List;
 @Table(name = "post")
 @NamedEntityGraph(name = "postGraph",
 attributeNodes = {@NamedAttributeNode("users"), @NamedAttributeNode("category")})
-public class Post extends AbstractEntity {
+public class Post {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "content")
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Users users;
+    private User users;
 
     @JoinColumn(name = "category_id")
     @ManyToMany(fetch = FetchType.LAZY)

@@ -3,7 +3,7 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.CommentDto;
 import org.example.entity.Comments;
-import org.example.repository.CommentRepository;
+import org.example.repository.impl.CommentRepository;
 import org.example.service.serviceInterface.CommentService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;

@@ -3,7 +3,7 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.AchievementRequestDto;
 import org.example.entity.AchievementRequest;
-import org.example.repository.AchievementRequestRepository;
+import org.example.repository.impl.AchievementRequestRepository;
 import org.example.service.serviceInterface.AchievementRequestService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class AchievementRequestServiceImpl implements AchievementRequestService 
 
     @Override
     public AchievementRequestDto getById(long id) {
-        AchievementRequest achievementRequest = (AchievementRequest) achievementRequestRepository.findById(id);
+        AchievementRequest achievementRequest = achievementRequestRepository.findById(id);
         return mapper.toDto(AchievementRequestDto.class, achievementRequest);
     }
 

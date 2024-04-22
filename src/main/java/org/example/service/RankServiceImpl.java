@@ -3,7 +3,7 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.RankDto;
 import org.example.entity.Rank;
-import org.example.repository.RankRepository;
+import org.example.repository.impl.RankRepository;
 import org.example.service.serviceInterface.RankService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;

@@ -3,7 +3,7 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.CategoryDto;
 import org.example.entity.Category;
-import org.example.repository.CategoryRepository;
+import org.example.repository.impl.CategoryRepository;
 import org.example.service.serviceInterface.CategoryService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;

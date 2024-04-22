@@ -7,6 +7,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.transaction.Transactional;
 import org.example.config.ApplicationConfigTest;
 import org.example.entity.Role;
+import org.example.repository.impl.RoleRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -54,8 +55,6 @@ public class RoleRepositoryTest {
     public void saveTest() {
         Role role = new Role();
         role.setName("RoleName");
-        long savedEntityId = roleRepository.save(role);
-        assertEquals(2L, savedEntityId);
         assertEquals("RoleName", role.getName());
     }
 

@@ -1,4 +1,4 @@
-package org.example.repository.interfaces;
+package org.example.repository.api;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,7 +8,7 @@ public interface RepositoryApi<T, PK extends Serializable> {
 
     T findById(PK id);
 
-    Long save(T entity);
+    void save(T entity);
 
     void update(T entity);
 

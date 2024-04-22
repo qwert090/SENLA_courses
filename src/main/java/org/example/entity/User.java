@@ -10,9 +10,14 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "users")
-public class Users extends AbstractEntity {
+public class User {
 
-    @Column(name = "nickname", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "nickname")
     private String nickname;
 
     @Column(name = "description")
@@ -41,4 +46,12 @@ public class Users extends AbstractEntity {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "achievement_id")
     private List<Achievement> achievements;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "follower_id")
+    private List<User> follower;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "followed_id")
+    private List<User> followed;
 }

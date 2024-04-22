@@ -3,7 +3,7 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.RoleDto;
 import org.example.entity.Role;
-import org.example.repository.RoleRepository;
+import org.example.repository.impl.RoleRepository;
 import org.example.service.serviceInterface.RoleService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;

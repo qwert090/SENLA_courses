@@ -8,7 +8,12 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "achievement")
-public class Achievement extends AbstractEntity {
+public class Achievement {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "name")
     private String name;

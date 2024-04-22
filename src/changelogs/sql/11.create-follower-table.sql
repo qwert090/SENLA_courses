@@ -1,8 +1,8 @@
 CREATE TABLE follower
 (
-    followed_id bigint,
+    user_id bigint,
     follower_id bigint,
-    PRIMARY KEY (followed_id, follower_id),
-    FOREIGN KEY (followed_id) references users(id),
+    PRIMARY KEY (user_id, follower_id),
+    FOREIGN KEY (user_id) references users(id),
     FOREIGN KEY (follower_id) references users(id)
 );
