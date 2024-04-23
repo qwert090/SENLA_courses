@@ -2,7 +2,6 @@ package org.example.repository.impl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.*;
-import org.example.entity.AbstractEntity_;
 import org.example.entity.Category;
 import org.example.entity.Game;
 import org.example.entity.Game_;
