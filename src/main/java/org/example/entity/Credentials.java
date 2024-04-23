@@ -10,12 +10,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "credentials")
-public class Credentials {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class Credentials extends AbstractEntity {
 
     @Column(name = "password")
     private String password;

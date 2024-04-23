@@ -6,7 +6,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.transaction.Transactional;
 import org.example.config.ApplicationConfigTest;
-import org.example.entity.Comments;
+import org.example.entity.Comment;
 import org.example.entity.User;
 import org.example.repository.impl.CommentRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +39,7 @@ public class CommentRepositoryTest {
 
     @Test
     public void findAllTest() {
-        List<Comments> comments = commentRepository.findAll();
+        List<Comment> comments = commentRepository.findAll();
         assertNotNull(comments);
         assertEquals(1, comments.size());
     }
@@ -47,7 +47,7 @@ public class CommentRepositoryTest {
     @Test
     public void findByIdTest() {
         Long id = 1L;
-        Comments comment = commentRepository.findById(id);
+        Comment comment = commentRepository.findById(id);
         assertNotNull(comment);
         assertEquals("Great post!", comment.getContent());
     }
@@ -55,7 +55,7 @@ public class CommentRepositoryTest {
     @Test
     @Transactional
     public void saveTest() {
-        Comments comment = new Comments();
+        Comment comment = new Comment();
         comment.setContent("CommentContent");
         assertEquals("CommentContent", comment.getContent());
     }
@@ -63,14 +63,14 @@ public class CommentRepositoryTest {
     @Test
     @Transactional
     public void updateTest() {
-        Comments comment = new Comments();
+        Comment comment = new Comment();
         User user = new User();
         user.setId(1L);
         comment.setId(1L);
         comment.setContent("UpdatedComment");
         comment.setUser(user);
         commentRepository.update(comment);
-        Comments updatedComment = commentRepository.findById(1L);
+        Comment updatedComment = commentRepository.findById(1L);
         assertNotNull(updatedComment);
         assertEquals("UpdatedComment", updatedComment.getContent());
     }

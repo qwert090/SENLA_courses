@@ -1,11 +1,9 @@
 package org.example.repository.impl;
 
-import jakarta.persistence.EntityGraph;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.example.entity.Credentials;
-import org.example.repository.impl.AbstractRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

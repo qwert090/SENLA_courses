@@ -1,12 +1,10 @@
 package org.example.repository.impl;
 
-import jakarta.persistence.EntityGraph;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import lombok.Getter;
+import jakarta.persistence.criteria.*;
+import org.example.entity.AbstractEntity_;
+import org.example.entity.Category;
 import org.example.entity.Game;
-import org.example.repository.impl.AbstractRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -18,12 +16,14 @@ public class GameRepository extends AbstractRepository<Game, Long> {
     }
 
     @Override
-    public Game findById(Long id){
-        EntityGraph<Game> entityGraph = entityManager.createEntityGraph(Game.class);
-        TypedQuery<Game> typedQuery = entityManager.createQuery("SELECT g FROM Game g WHERE g.id = :id", Game.class);
-        typedQuery.setParameter("id", id);
-        entityGraph.addAttributeNodes("category");
-        typedQuery.setHint("jakarta.persistence.loadgraph", entityGraph);
-        return typedQuery.getSingleResult();
+    public Game findById(Long id) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Game> criteriaQuery = criteriaBuilder.createQuery(Game.class);
+        Root<Game> root = criteriaQuery.from(Game.class);
+        criteriaQuery.select(root);
+        criteriaQuery.where(criteriaBuilder.equal(root.get(AbstractEntity_.id), id));
+        Join<Game, Category> categoryJoin = root.join("category", JoinType.LEFT);
+        Fetch<Game, Category> categoryFetch = root.fetch("category", JoinType.LEFT);
+        return entityManager.createQuery(criteriaQuery).getSingleResult();
     }
 }

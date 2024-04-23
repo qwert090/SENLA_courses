@@ -8,12 +8,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "achievement_request")
-public class AchievementRequest {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class AchievementRequest extends AbstractEntity {
 
     @Column(name = "game_name")
     private String gameName;

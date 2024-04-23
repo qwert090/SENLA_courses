@@ -3,9 +3,7 @@ package org.example.repository.impl;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
-import lombok.Getter;
 import org.example.entity.Role;
-import org.example.repository.impl.AbstractRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

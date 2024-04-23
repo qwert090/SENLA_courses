@@ -4,9 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
-import lombok.Getter;
 import org.example.entity.User;
-import org.example.repository.impl.AbstractRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

@@ -7,13 +7,15 @@ import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
+import org.example.entity.AbstractEntity;
+import org.example.entity.AbstractEntity_;
 import org.example.repository.api.RepositoryApi;
 
 import java.io.Serializable;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class AbstractRepository<T , PK extends Serializable> implements RepositoryApi<T, Long> {
+public class AbstractRepository<T extends AbstractEntity, PK extends Serializable> implements RepositoryApi<T, Long> {
 
     @PersistenceContext
     protected final EntityManager entityManager;
@@ -22,7 +24,11 @@ public class AbstractRepository<T , PK extends Serializable> implements Reposito
 
     @Override
     public T findById(Long id) {
-        return entityManager.find(entityClass, id);
+        CriteriaQuery<T> query = criteriaBuilder.createQuery(entityClass);
+        Root<T> root = query.from(entityClass);
+        query.select(root).where(criteriaBuilder.equal(root.get(AbstractEntity_.ID), id));
+
+        return entityManager.createQuery(query).getSingleResult();
     }
 
     @Override
@@ -49,7 +55,7 @@ public class AbstractRepository<T , PK extends Serializable> implements Reposito
     public void deleteById(Long id) {
         CriteriaDelete<T> deleteQuery = criteriaBuilder.createCriteriaDelete(entityClass);
         Root<T> root = deleteQuery.from(entityClass);
-        deleteQuery.where(criteriaBuilder.equal(root.get("id"), id));
+        deleteQuery.where(criteriaBuilder.equal(root.get(AbstractEntity_.id), id));
         entityManager.createQuery(deleteQuery).executeUpdate();
         entityManager.flush();
     }

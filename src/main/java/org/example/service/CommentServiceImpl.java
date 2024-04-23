@@ -2,7 +2,7 @@ package org.example.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.dto.CommentDto;
-import org.example.entity.Comments;
+import org.example.entity.Comment;
 import org.example.repository.impl.CommentRepository;
 import org.example.service.serviceInterface.CommentService;
 import org.example.utils.CustomMapper;
@@ -16,7 +16,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void createComment(CommentDto commentDto) {
-        Comments comment = mapper.toEntity(Comments.class, commentDto);
+        Comment comment = mapper.toEntity(Comment.class, commentDto);
         commentRepository.save(comment);
 
     }
@@ -29,14 +29,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto getById(long id) {
-        Comments comment = commentRepository.findById(id);
+        Comment comment = commentRepository.findById(id);
         return mapper.toDto(CommentDto.class, comment);
     }
 
     @Override
     public void updateComment(CommentDto commentDto) {
         commentRepository.findById(commentDto.getId());
-        Comments updateComment = mapper.toEntity(Comments.class, commentDto);
+        Comment updateComment = mapper.toEntity(Comment.class, commentDto);
         commentRepository.update(updateComment);
     }
 }

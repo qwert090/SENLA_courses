@@ -8,12 +8,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "comments")
-public class Comments {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class Comment extends AbstractEntity {
 
     @Column(name = "content")
     private String content;
