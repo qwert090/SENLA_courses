@@ -1,16 +1,21 @@
 package org.example.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.List;
 
 @Getter
 @Setter
-@ToString
-public class Game {
-    private long id;
+@Entity
+@Table(name = "game")
+public class Game extends AbstractEntity {
+
+    @Column(name = "name")
     private String name;
-    private List<Category> categories;
+
+    @JoinColumn(name = "category_id")
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Category> category;
 }

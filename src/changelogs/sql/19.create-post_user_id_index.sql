@@ -1,1 +1,1 @@
-CREATE INDEX post_user_id_index ON post(user_id);
+CREATE INDEX post_user_id_index ON post(users_id);

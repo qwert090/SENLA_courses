@@ -1,21 +1,31 @@
 package org.example.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-
-import java.util.List;
 
 @Getter
 @Setter
-@ToString
-public class Achievement {
-    private long id;
+@Entity
+@Table(name = "achievement")
+public class Achievement extends AbstractEntity {
+
+    @Column(name = "name")
     private String name;
-    private Game game;
+
+    @Column(name = "condition")
     private String condition;
+
+    @Column(name = "platform")
     private String platform;
-    private int achievementExperience;
+
+    @Column(name = "experience")
+    private int experience;
+
+    @Column(name = "type")
     private String type;
-    private List<User> users;
+
+    @JoinColumn(name = "game_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Game game;
 }

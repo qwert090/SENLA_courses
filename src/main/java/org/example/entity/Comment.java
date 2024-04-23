@@ -1,16 +1,23 @@
 package org.example.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
-public class Comment {
-    private long id;
-    private Comment parentComment;
+@Entity
+@Table(name = "comments")
+public class Comment extends AbstractEntity {
+
+    @Column(name = "content")
+    private String content;
+
+    @JoinColumn(name = "users_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    private String value;
+
+    @JoinColumn(name = "post_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
 }

@@ -1,25 +1,52 @@
 package org.example.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.List;
 
 @Getter
 @Setter
-@ToString
-public class User {
-    private long id;
+@Entity
+@Table(name = "users")
+public class User extends AbstractEntity{
+
+    @Column(name = "nickname")
     private String nickname;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "avatar")
     private String avatar;
+
+    @Column(name = "total_experience")
     private int totalExp;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ranks_id")
     private Rank rank;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "credentials_id", nullable = false)
     private Credentials credentials;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "users")
     private List<Post> posts;
-    private List<Comment> comments;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "users")
     private List<AchievementRequest> achievementRequests;
-    private List<User> followers;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "achievement_id")
     private List<Achievement> achievements;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "follower_id")
+    private List<User> follower;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "followed_id")
+    private List<User> followed;
 }

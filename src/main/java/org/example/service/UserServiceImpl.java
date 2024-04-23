@@ -1,10 +1,10 @@
 package org.example.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.example.annotation.Transaction;
 import org.example.dto.UserDto;
 import org.example.entity.User;
-import org.example.repository.UserRepository;
+import org.example.repository.impl.UserRepository;
 import org.example.service.serviceInterface.UserService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
@@ -16,29 +16,29 @@ public class UserServiceImpl implements UserService {
     private final CustomMapper mapper;
 
     @Override
-    @Transaction
+    @Transactional
     public void createUser(UserDto userDto) {
         User user = mapper.toEntity(User.class, userDto);
-        userRepository.create(user);
+        userRepository.save(user);
     }
 
     @Override
-    @Transaction
+    @Transactional
     public UserDto getById(long id) {
-        User user = userRepository.read(id);
+        User user = userRepository.findById(id);
         return mapper.toDto(UserDto.class, user);
     }
 
     @Override
-    @Transaction
+    @Transactional
     public void deleteById(long id) {
-        userRepository.delete(id);
+        userRepository.deleteById(id);
     }
 
     @Override
-    @Transaction
+    @Transactional
     public void updateUser(UserDto userDto){
-        userRepository.read(userDto.getId());
+        userRepository.findById(userDto.getId());
         User updateUser = mapper.toEntity(User.class, userDto);
         userRepository.update(updateUser);
     }

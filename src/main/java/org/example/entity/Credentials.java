@@ -1,17 +1,24 @@
 package org.example.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.List;
 
 @Getter
 @Setter
-@ToString
-public class Credentials {
-    private long id;
+@Entity
+@Table(name = "credentials")
+public class Credentials extends AbstractEntity {
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "email")
     private String email;
-    private List<Role> role;
+
+    @JoinColumn(name = "roles_id")
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Role> roles;
 }
