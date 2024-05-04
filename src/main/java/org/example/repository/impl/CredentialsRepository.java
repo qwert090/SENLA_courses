@@ -16,8 +16,7 @@ public class CredentialsRepository extends AbstractRepository<Credentials, Long>
     @Override
     public Credentials findById(Long id) {
         TypedQuery<Credentials> typedQuery = entityManager.createQuery(
-                "SELECT c FROM Credentials c LEFT JOIN FETCH c.roles WHERE c.id = :id", Credentials.class
-        );
+                "SELECT c FROM Credentials c WHERE c.id = :id", Credentials.class);
         typedQuery.setParameter("id", id);
         return typedQuery.getSingleResult();
     }

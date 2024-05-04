@@ -10,10 +10,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AchievementDto {
-    private long id;
+    private Long id;
     private String name;
     private String condition;
     private String platform;
-    private int achievementExperience;
+    private Integer achievementExperience;
     private String type;
 }

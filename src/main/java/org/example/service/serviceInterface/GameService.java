@@ -6,9 +6,9 @@ public interface GameService {
 
     void createGame(GameDto gameDto);
 
-    void deleteById(long id);
+    void deleteById(Long id);
 
-    GameDto getById(long id);
+    GameDto getById(Long id);
 
     void updateGame(GameDto gameDto);
 }

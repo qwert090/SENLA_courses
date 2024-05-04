@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AchievementRequestDto {
-    private long id;
+    private Long id;
     private String gameName;
     private String achievementName;
     private String platform;

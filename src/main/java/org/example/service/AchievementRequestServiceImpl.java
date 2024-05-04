@@ -23,20 +23,19 @@ public class AchievementRequestServiceImpl implements AchievementRequestService 
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         achievementRequestRepository.deleteById(id);
 
     }
 
     @Override
-    public AchievementRequestDto getById(long id) {
+    public AchievementRequestDto getById(Long id) {
         AchievementRequest achievementRequest = achievementRequestRepository.findById(id);
         return mapper.toDto(AchievementRequestDto.class, achievementRequest);
     }
 
     @Override
     public void updateAchievementRequest(AchievementRequestDto achievementRequestDto) {
-        achievementRequestRepository.findById(achievementRequestDto.getId());
         AchievementRequest updateAchievementRequest = mapper.toEntity(AchievementRequest.class, achievementRequestDto);
         achievementRequestRepository.update(updateAchievementRequest);
     }

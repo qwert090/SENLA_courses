@@ -15,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ContextConfiguration(classes = {ApplicationConfigTest.class})
 @ExtendWith(SpringExtension.class)
+@WebAppConfiguration
 public class UserRepositoryTest {
 
     private UserRepository userRepository;
@@ -66,14 +68,14 @@ public class UserRepositoryTest {
     @Transactional
     public void updateTest() {
         User user = new User();
-        user.setId(2L);
-        user.setNickname("UpdateUser");
+        user.setId(1L);
+        user.setNickname("john_doe");
         Credentials credentials = new Credentials();
         user.setCredentials(credentials);
         userRepository.update(user);
-        User updatedUser = userRepository.findById(2L);
+        User updatedUser = userRepository.findById(1L);
         assertNotNull(updatedUser);
-        assertEquals("UpdateUser", updatedUser.getNickname());
+        assertEquals("john_doe", updatedUser.getNickname());
     }
 
     @Test

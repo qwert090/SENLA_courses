@@ -3,30 +3,31 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.AchievementDto;
 import org.example.service.serviceInterface.AchievementService;
-import org.example.utils.JsonMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
-@Component
+@RestController
+@RequestMapping("/achievements")
 @RequiredArgsConstructor
 public class AchievementController {
     private final AchievementService achievementService;
-    private final JsonMapper json;
 
-    public void createAchievement(String serializedAchievement){
-        AchievementDto achievementDto = json.deserialize(serializedAchievement, AchievementDto.class);
+    @PostMapping
+    public void createAchievement(@RequestBody AchievementDto achievementDto){
         achievementService.createAchievement(achievementDto);
     }
 
-    public void deleteById(long achievementId){
+    @DeleteMapping("/{achievementId}")
+    public void deleteById(@PathVariable("achievementId") Long achievementId){
         achievementService.deleteById(achievementId);
     }
 
-    public void updateAchievement(String serializedAchievement){
-        AchievementDto achievementDto = json.deserialize(serializedAchievement, AchievementDto.class);
+    @PutMapping
+    public void updateAchievement(@RequestBody AchievementDto achievementDto){
         achievementService.updateAchievement(achievementDto);
     }
 
-    public AchievementDto getById(long achievementId){
+    @GetMapping("/{achievementId}")
+    public AchievementDto getById(@PathVariable("achievementId") Long achievementId){
         return achievementService.getById(achievementId);
     }
 }

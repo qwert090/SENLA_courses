@@ -6,9 +6,9 @@ public interface PostService {
 
     void createPost(PostDto postDto);
 
-    void deleteById(long id);
+    void deleteById(Long id);
 
-    PostDto getById(long id);
+    PostDto getById(Long id);
 
     void updatePost(PostDto postDto);
 }

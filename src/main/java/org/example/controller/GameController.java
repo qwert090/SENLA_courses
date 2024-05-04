@@ -3,30 +3,31 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.GameDto;
 import org.example.service.serviceInterface.GameService;
-import org.example.utils.JsonMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
-@Component
+@RestController
+@RequestMapping("/games")
 @RequiredArgsConstructor
 public class GameController {
     private final GameService gameService;
-    private final JsonMapper json;
 
-    public void createGame(String serializedGame){
-        GameDto gameDto = json.deserialize(serializedGame, GameDto.class);
+    @PostMapping
+    public void createGame(@RequestBody GameDto gameDto){
         gameService.createGame(gameDto);
     }
 
-    public void deleteById(long gameId){
+    @DeleteMapping("/{gameId}")
+    public void deleteById(@PathVariable("gameId") Long gameId){
         gameService.deleteById(gameId);
     }
 
-    public void updateGame(String serializedGame){
-        GameDto gameDto = json.deserialize(serializedGame, GameDto.class);
+    @PutMapping
+    public void updateGame(@RequestBody GameDto gameDto){
         gameService.updateGame(gameDto);
     }
 
-    public GameDto getById(long gamerId){
+    @GetMapping("/{gameId}")
+    public GameDto getById(@PathVariable("gameId") Long gamerId){
         return gameService.getById(gamerId);
     }
 }

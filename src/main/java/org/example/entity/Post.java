@@ -1,7 +1,9 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "post")
+@NoArgsConstructor
+@AllArgsConstructor
 @NamedEntityGraph(name = "postGraph",
 attributeNodes = {@NamedAttributeNode("users"), @NamedAttributeNode("category")})
 public class Post extends AbstractEntity{

@@ -3,30 +3,31 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.RoleDto;
 import org.example.service.serviceInterface.RoleService;
-import org.example.utils.JsonMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
-@Component
+@RestController
+@RequestMapping("/roles")
 @RequiredArgsConstructor
 public class RoleController {
     private final RoleService roleService;
-    private final JsonMapper json;
 
-    public void createRole(String serializedRole){
-        RoleDto roleDto = json.deserialize(serializedRole, RoleDto.class);
+    @PostMapping
+    public void createRole(@RequestBody RoleDto roleDto){
         roleService.createRole(roleDto);
     }
 
-    public void deleteById(long roleId){
+    @DeleteMapping("/{roleId}")
+    public void deleteById(@PathVariable("roleId") Long roleId){
         roleService.deleteById(roleId);
     }
 
-    public void updateRole(String serializedRole){
-        RoleDto roleDto = json.deserialize(serializedRole, RoleDto.class);
+    @PutMapping
+    public void updateRole(@RequestBody RoleDto roleDto){
         roleService.updateRole(roleDto);
     }
 
-    public RoleDto getById(long roleId){
+    @GetMapping("/{roleId}")
+    public RoleDto getById(@PathVariable("roleId") Long roleId){
         return roleService.getById(roleId);
     }
 }

@@ -22,20 +22,19 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         commentRepository.deleteById(id);
 
     }
 
     @Override
-    public CommentDto getById(long id) {
+    public CommentDto getById(Long id) {
         Comment comment = commentRepository.findById(id);
         return mapper.toDto(CommentDto.class, comment);
     }
 
     @Override
     public void updateComment(CommentDto commentDto) {
-        commentRepository.findById(commentDto.getId());
         Comment updateComment = mapper.toEntity(Comment.class, commentDto);
         commentRepository.update(updateComment);
     }

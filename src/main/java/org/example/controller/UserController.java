@@ -3,30 +3,31 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.UserDto;
 import org.example.service.serviceInterface.UserService;
-import org.example.utils.JsonMapper;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final JsonMapper json;
 
-    public void createUser(String serializedUser){
-        UserDto userDto = json.deserialize(serializedUser, UserDto.class);
+    @PostMapping
+    public void createUser(@RequestBody UserDto userDto){
         userService.createUser(userDto);
     }
 
-    public void deleteById(long userId){
+    @DeleteMapping("/{userId}")
+    public void deleteById(@PathVariable("userId") Long userId){
         userService.deleteById(userId);
     }
 
-    public void updateUser(String serializedUser){
-        UserDto userDto = json.deserialize(serializedUser, UserDto.class);
+    @PutMapping
+    public void updateUser(@RequestBody UserDto userDto){
         userService.updateUser(userDto);
     }
 
-    public UserDto getById(long userId){
+    @GetMapping("/{userId}")
+    public UserDto getById(@PathVariable("userId") Long userId){
         return userService.getById(userId);
     }
 }

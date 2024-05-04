@@ -6,9 +6,9 @@ public interface AchievementRequestService {
 
     void createAchievementRequest(AchievementRequestDto achievementRequestDto);
 
-    void deleteById(long id);
+    void deleteById(Long id);
 
-    AchievementRequestDto getById(long id);
+    AchievementRequestDto getById(Long id);
 
     void updateAchievementRequest(AchievementRequestDto achievementRequestDto);
 }

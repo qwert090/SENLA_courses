@@ -6,9 +6,9 @@ public interface RankService {
 
     void createRank(RankDto rankDto);
 
-    void deleteById(long id);
+    void deleteById(Long id);
 
-    RankDto getById(long id);
+    RankDto getById(Long id);
 
     void updateRank(RankDto rankDto);
 }

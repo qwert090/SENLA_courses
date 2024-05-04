@@ -22,20 +22,19 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         postRepository.deleteById(id);
 
     }
 
     @Override
-    public PostDto getById(long id) {
+    public PostDto getById(Long id) {
         Post post = postRepository.findById(id);
         return mapper.toDto(PostDto.class, post);
     }
 
     @Override
     public void updatePost(PostDto postDto) {
-        postRepository.findById(postDto.getId());
         Post updatePost = mapper.toEntity(Post.class, postDto);
         postRepository.update(updatePost);
     }

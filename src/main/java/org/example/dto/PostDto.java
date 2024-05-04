@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostDto {
-    private long id;
+    private Long id;
     private String value;
 }

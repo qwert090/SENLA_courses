@@ -22,19 +22,18 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         gameRepository.deleteById(id);
     }
 
     @Override
-    public GameDto getById(long id) {
+    public GameDto getById(Long id) {
         Game game = gameRepository.findById(id);
         return mapper.toDto(GameDto.class, game);
     }
 
     @Override
     public void updateGame(GameDto gameDto) {
-        gameRepository.findById(gameDto.getId());
         Game updateGame = mapper.toEntity(Game.class, gameDto);
         gameRepository.update(updateGame);
     }

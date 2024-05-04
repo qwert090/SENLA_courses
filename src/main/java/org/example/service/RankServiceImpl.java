@@ -22,20 +22,19 @@ public class RankServiceImpl implements RankService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         rankRepository.deleteById(id);
 
     }
 
     @Override
-    public RankDto getById(long id) {
-        Rank rank = new Rank();
+    public RankDto getById(Long id) {
+        Rank rank = rankRepository.findById(id);
         return mapper.toDto(RankDto.class, rank);
     }
 
     @Override
     public void updateRank(RankDto rankDto) {
-        rankRepository.findById(rankDto.getId());
         Rank updateRank = mapper.toEntity(Rank.class, rankDto);
         rankRepository.update(updateRank);
     }

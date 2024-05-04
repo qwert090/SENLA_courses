@@ -21,19 +21,18 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         roleRepository.deleteById(id);
     }
 
     @Override
-    public RoleDto getById(long id) {
-        Role role = (Role) roleRepository.findById(id);
+    public RoleDto getById(Long id) {
+        Role role = roleRepository.findById(id);
         return mapper.toDto(RoleDto.class, role);
     }
 
     @Override
     public void updateRole(RoleDto roleDto) {
-        roleRepository.findById(roleDto.getId());
         Role updateRole = mapper.toEntity(Role.class, roleDto);
         roleRepository.update(updateRole);
     }

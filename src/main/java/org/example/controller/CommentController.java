@@ -3,30 +3,31 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.CommentDto;
 import org.example.service.serviceInterface.CommentService;
-import org.example.utils.JsonMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
-@Component
+@RestController
+@RequestMapping("/comments")
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
-    private final JsonMapper json;
 
-    public void createComment(String serializedComment){
-        CommentDto commentDto = json.deserialize(serializedComment, CommentDto.class);
+    @PostMapping
+    public void createComment(@RequestBody CommentDto commentDto) {
         commentService.createComment(commentDto);
     }
 
-    public void deleteById(long commentId){
+    @DeleteMapping("/{commentId}")
+    public void deleteById(@PathVariable("commentId") Long commentId) {
         commentService.deleteById(commentId);
     }
 
-    public void updateComment(String serializedComment){
-        CommentDto commentDto = json.deserialize(serializedComment, CommentDto.class);
+    @PutMapping
+    public void updateComment(@RequestBody CommentDto commentDto) {
         commentService.updateComment(commentDto);
     }
 
-    public CommentDto getById(long commentId){
+    @GetMapping("/{commentId}")
+    public CommentDto getById(@PathVariable("commentId") Long commentId) {
         return commentService.getById(commentId);
     }
 }

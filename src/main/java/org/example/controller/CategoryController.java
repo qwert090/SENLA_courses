@@ -3,30 +3,31 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.CategoryDto;
 import org.example.service.serviceInterface.CategoryService;
-import org.example.utils.JsonMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
-@Component
+@RestController
+@RequestMapping("/categories")
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
-    private final JsonMapper json;
 
-    public void createCategory(String serializedCategory){
-        CategoryDto categoryDto = json.deserialize(serializedCategory, CategoryDto.class);
+    @PostMapping
+    public void createCategory(@RequestBody CategoryDto categoryDto) {
         categoryService.createCategory(categoryDto);
     }
 
-    public void deleteById(long categoryId){
+    @DeleteMapping("/{categoryId}")
+    public void deleteById(@PathVariable("categoryId") Long categoryId) {
         categoryService.deleteById(categoryId);
     }
 
-    public void updateCategory(String serializedCategory){
-        CategoryDto categoryDto = json.deserialize(serializedCategory, CategoryDto.class);
+    @PutMapping
+    public void updateCategory(@RequestBody CategoryDto categoryDto) {
         categoryService.updateCategory(categoryDto);
     }
 
-    public CategoryDto getById(long categoryId){
+    @GetMapping("/{categoryId}")
+    public CategoryDto getById(@PathVariable("categoryId") Long categoryId) {
         return categoryService.getById(categoryId);
     }
 }

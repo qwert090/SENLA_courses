@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RankDto {
-    private long id;
+    private Long id;
     private String name;
     private String description;
 }

@@ -46,8 +46,8 @@ public class AbstractRepository<T extends AbstractEntity, PK extends Serializabl
     }
 
     @Override
-    public void update(T entity) {
-        entityManager.merge(entity);
+    public void update(T updateEntity) {
+        entityManager.merge(updateEntity);
         entityManager.flush();
     }
 

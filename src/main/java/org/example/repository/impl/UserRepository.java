@@ -5,6 +5,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import org.example.entity.User;
+import org.example.entity.User_;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,9 +17,10 @@ public class UserRepository extends AbstractRepository<User, Long> {
 
     @Override
     public User findById(Long id) {
-        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
-        Root<User> root = criteriaQuery.from(User.class);
-        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("id"), id));
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(entityClass);
+        Root<User> root = criteriaQuery.from(entityClass);
+        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(User_.ID), id));
         return entityManager.createQuery(criteriaQuery).getSingleResult();
     }
 }

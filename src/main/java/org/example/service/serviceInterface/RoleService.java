@@ -6,9 +6,9 @@ public interface RoleService {
 
     void createRole(RoleDto roleDto);
 
-    void deleteById(long id);
+    void deleteById(Long id);
 
-    RoleDto getById(long id);
+    RoleDto getById(Long id);
 
     void updateRole(RoleDto roleDto);
 }
