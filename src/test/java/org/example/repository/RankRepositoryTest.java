@@ -47,7 +47,7 @@ public class RankRepositoryTest {
     @Test
     public void findByIdTest() {
         Long id = 1L;
-        Rank rank = rankRepository.findById(id);
+        Rank rank = rankRepository.findById(id).orElseThrow();
         assertNotNull(rank);
         assertEquals("Beginner", rank.getName());
     }
@@ -67,7 +67,7 @@ public class RankRepositoryTest {
         rank.setId(1L);
         rank.setName("UpdateRank");
         rankRepository.update(rank);
-        Rank updatedRank = rankRepository.findById(1L);
+        Rank updatedRank = rankRepository.findById(1L).orElseThrow();
         assertNotNull(updatedRank);
         assertEquals("UpdateRank", updatedRank.getName());
     }

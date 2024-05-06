@@ -47,7 +47,7 @@ public class RoleRepositoryTest {
     @Test
     public void findByIdTest() {
         Long id = 1L;
-        Role role = roleRepository.findById(id);
+        Role role = roleRepository.findById(id).orElseThrow();
         assertNotNull(role);
         assertEquals("Admin", role.getName());
     }
@@ -67,7 +67,7 @@ public class RoleRepositoryTest {
         role.setId(1L);
         role.setName("UpdateRole");
         roleRepository.update(role);
-        Role updatedRole = roleRepository.findById(1L);
+        Role updatedRole = roleRepository.findById(1L).orElseThrow();
         assertNotNull(updatedRole);
         assertEquals("UpdateRole", updatedRole.getName());
     }

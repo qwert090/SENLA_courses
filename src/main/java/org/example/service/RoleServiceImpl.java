@@ -1,15 +1,20 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.dto.RoleDto;
 import org.example.entity.Role;
+import org.example.exception.EntityNotFoundException;
 import org.example.repository.impl.RoleRepository;
 import org.example.service.serviceInterface.RoleService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
     private final CustomMapper mapper;
@@ -27,7 +32,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDto getById(Long id) {
-        Role role = roleRepository.findById(id);
+        Role role = roleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Role not found"));
         return mapper.toDto(RoleDto.class, role);
     }
 

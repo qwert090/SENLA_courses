@@ -9,6 +9,8 @@ import org.example.entity.Game;
 import org.example.entity.Game_;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class GameRepository extends AbstractRepository<Game, Long> {
 
@@ -17,13 +19,13 @@ public class GameRepository extends AbstractRepository<Game, Long> {
     }
 
     @Override
-    public Game findById(Long id) {
+    public Optional<Game> findById(Long id) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Game> criteriaQuery = criteriaBuilder.createQuery(entityClass);
         Root<Game> root = criteriaQuery.from(entityClass);
         root.fetch(Game_.CATEGORY, JoinType.LEFT);
         criteriaQuery.select(root);
         criteriaQuery.where(criteriaBuilder.equal(root.get(Game_.id), id));
-        return entityManager.createQuery(criteriaQuery).getSingleResult();
+        return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
     }
 }

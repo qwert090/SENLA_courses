@@ -1,15 +1,20 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.dto.CategoryDto;
 import org.example.entity.Category;
+import org.example.exception.EntityNotFoundException;
 import org.example.repository.impl.CategoryRepository;
 import org.example.service.serviceInterface.CategoryService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final CustomMapper mapper;
@@ -29,7 +34,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto getById(Long id) {
-        Category category = categoryRepository.findById(id);
+        Category category = categoryRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("Category not found"));
         return mapper.toDto(CategoryDto.class, category);
     }
 

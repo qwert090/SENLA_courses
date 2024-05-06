@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
@@ -51,7 +53,7 @@ public class PostServiceTest {
         Post post = new Post();
         PostDto postDto = new PostDto();
         when(mapper.toDto(PostDto.class, post)).thenReturn(postDto);
-        when(postRepository.findById(postId)).thenReturn(post);
+        when(postRepository.findById(postId)).thenReturn(Optional.of(post));
         PostDto result = postService.getById(postId);
         assertSame(postDto, result);
     }

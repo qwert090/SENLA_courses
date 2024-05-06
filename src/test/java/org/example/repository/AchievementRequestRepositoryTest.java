@@ -47,7 +47,7 @@ public class AchievementRequestRepositoryTest {
     @Test
     public void findByIdTest() {
         Long id = 1L;
-        AchievementRequest achievementRequest = achievementRequestRepository.findById(id);
+        AchievementRequest achievementRequest = achievementRequestRepository.findById(id).orElseThrow();
         assertNotNull(achievementRequest);
         assertEquals("Grandmaster", achievementRequest.getAchievementName());
     }
@@ -67,7 +67,7 @@ public class AchievementRequestRepositoryTest {
         achievementRequest.setId(1L);
         achievementRequest.setAchievementName("UpdatedRequest");
         achievementRequestRepository.update(achievementRequest);
-        AchievementRequest updatedRequest = achievementRequestRepository.findById(1L);
+        AchievementRequest updatedRequest = achievementRequestRepository.findById(1L).orElseThrow();
         assertNotNull(updatedRequest);
         assertEquals("UpdatedRequest", updatedRequest.getAchievementName());
     }

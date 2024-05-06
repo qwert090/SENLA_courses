@@ -47,7 +47,7 @@ public class CredentialsRepositoryTest {
     @Test
     public void findByIdTest() {
         Long id = 1L;
-        Credentials credentials = credentialsRepository.findById(id);
+        Credentials credentials = credentialsRepository.findById(id).orElseThrow();
         assertNotNull(credentials);
         assertEquals("password123", credentials.getPassword());
     }
@@ -67,7 +67,7 @@ public class CredentialsRepositoryTest {
         credentials.setId(1L);
         credentials.setPassword("UpdatedPassword");
         credentialsRepository.update(credentials);
-        Credentials updatedCredentials = credentialsRepository.findById(1L);
+        Credentials updatedCredentials = credentialsRepository.findById(1L).orElseThrow();
         assertNotNull(updatedCredentials);
         assertEquals("UpdatedPassword", updatedCredentials.getPassword());
     }

@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
@@ -51,7 +53,7 @@ public class RoleServiceTest {
         RoleDto roleDto = new RoleDto();
         Role role = new Role();
         long roleId = 1L;
-        when(roleRepository.findById(roleId)).thenReturn(role);
+        when(roleRepository.findById(roleId)).thenReturn(Optional.of(role));
         when(mapper.toDto(RoleDto.class, role)).thenReturn(roleDto);
         RoleDto result = roleService.getById(roleId);
         assertSame(roleDto, result);

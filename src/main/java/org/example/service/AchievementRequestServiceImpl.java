@@ -1,15 +1,20 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.dto.AchievementRequestDto;
 import org.example.entity.AchievementRequest;
+import org.example.exception.EntityNotFoundException;
 import org.example.repository.impl.AchievementRequestRepository;
 import org.example.service.serviceInterface.AchievementRequestService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AchievementRequestServiceImpl implements AchievementRequestService {
     private final AchievementRequestRepository achievementRequestRepository;
     private final CustomMapper mapper;
@@ -30,7 +35,8 @@ public class AchievementRequestServiceImpl implements AchievementRequestService 
 
     @Override
     public AchievementRequestDto getById(Long id) {
-        AchievementRequest achievementRequest = achievementRequestRepository.findById(id);
+        AchievementRequest achievementRequest = achievementRequestRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("Achievement request not found"));
         return mapper.toDto(AchievementRequestDto.class, achievementRequest);
     }
 

@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
@@ -41,7 +43,7 @@ public class AchievementServiceTest {
         long achievementId = 1L;
         Achievement achievement = new Achievement();
         AchievementDto achievementDto = new AchievementDto();
-        when(achievementRepository.findById(achievementId)).thenReturn(achievement);
+        when(achievementRepository.findById(achievementId)).thenReturn(Optional.of(achievement));
         when(mapper.toDto(AchievementDto.class, achievement)).thenReturn(achievementDto);
         AchievementDto result = achievementService.getById(achievementId);
         assertSame(achievementDto, result);

@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
@@ -51,7 +53,7 @@ public class CategoryServiceTest {
         Category category = new Category();
         CategoryDto categoryDto = new CategoryDto();
         when(mapper.toDto(CategoryDto.class, category)).thenReturn(categoryDto);
-        when(categoryRepository.findById(categoryId)).thenReturn(category);
+        when(categoryRepository.findById(categoryId)).thenReturn(Optional.of(category));
         CategoryDto result = categoryService.getById(categoryId);
         assertSame(categoryDto, result);
     }

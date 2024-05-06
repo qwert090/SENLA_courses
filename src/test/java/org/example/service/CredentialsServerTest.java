@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
@@ -52,7 +54,7 @@ public class CredentialsServerTest {
         Credentials credentials = new Credentials();
         CredentialsDto credentialsDto = new CredentialsDto();
         when(mapper.toDto(CredentialsDto.class, credentials)).thenReturn(credentialsDto);
-        when(credentialsRepository.findById(credentialsId)).thenReturn(credentials);
+        when(credentialsRepository.findById(credentialsId)).thenReturn(Optional.of(credentials));
         CredentialsDto result = credentialsService.getById(credentialsId);
         assertSame(credentialsDto, result);
     }

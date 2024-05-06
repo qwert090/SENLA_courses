@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
@@ -41,7 +43,7 @@ public class UserServiceTest {
         long userId = 1L;
         User user = new User();
         UserDto userDto = new UserDto();
-        when(userRepository.findById(userId)).thenReturn(user);
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(mapper.toDto(UserDto.class, user)).thenReturn(userDto);
         UserDto result = userService.getById(userId);
         assertSame(userDto, result);

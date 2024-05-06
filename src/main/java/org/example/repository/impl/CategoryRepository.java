@@ -6,6 +6,8 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import org.example.entity.Category;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class CategoryRepository extends AbstractRepository<Category, Long> {
 
@@ -15,9 +17,9 @@ public class CategoryRepository extends AbstractRepository<Category, Long> {
     }
 
     @Override
-    public Category findById(Long id){
+    public Optional<Category> findById(Long id){
         TypedQuery<Category> userTypedQuery = entityManager.createQuery("SELECT c  FROM Category c WHERE c.id = :id", Category.class)
                 .setParameter("id", id);
-        return userTypedQuery.getSingleResult();
+        return Optional.ofNullable(userTypedQuery.getSingleResult());
     }
 }

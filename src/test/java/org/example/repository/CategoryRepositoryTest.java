@@ -47,7 +47,7 @@ public class CategoryRepositoryTest {
     @Test
     public void findByIdTest() {
         Long id = 1L;
-        Category category = categoryRepository.findById(id);
+        Category category = categoryRepository.findById(id).orElseThrow();
         assertNotNull(category);
         assertEquals("Technology", category.getName());
     }
@@ -67,7 +67,7 @@ public class CategoryRepositoryTest {
         category.setId(1L);
         category.setName("UpdatedCategory");
         categoryRepository.update(category);
-        Category updatedCategory = categoryRepository.findById(1L);
+        Category updatedCategory = categoryRepository.findById(1L).orElseThrow();
         assertNotNull(updatedCategory);
         assertEquals("UpdatedCategory", updatedCategory.getName());
     }

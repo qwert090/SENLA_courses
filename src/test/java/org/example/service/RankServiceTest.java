@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
@@ -52,7 +54,7 @@ public class RankServiceTest {
         Rank rank = new Rank();
         RankDto rankDto = new RankDto();
         when(mapper.toDto(RankDto.class, rank)).thenReturn(rankDto);
-        when(rankRepository.findById(rankId)).thenReturn(rank);
+        when(rankRepository.findById(rankId)).thenReturn(Optional.of(rank));
         RankDto result = rankService.getById(rankId);
         assertSame(rankDto, result);
     }

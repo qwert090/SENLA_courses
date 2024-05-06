@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
@@ -51,7 +53,7 @@ public class CommentServiceTest {
         Comment comment = new Comment();
         CommentDto commentDto = new CommentDto();
         when(mapper.toDto(CommentDto.class, comment)).thenReturn(commentDto);
-        when(commentRepository.findById(commentId)).thenReturn(comment);
+        when(commentRepository.findById(commentId)).thenReturn(Optional.of(comment));
         CommentDto result = commentService.getById(commentId);
         assertSame(commentDto, result);
     }

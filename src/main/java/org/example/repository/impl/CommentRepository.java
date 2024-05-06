@@ -7,6 +7,8 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import org.example.entity.Comment;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class CommentRepository extends AbstractRepository<Comment, Long> {
 
@@ -15,12 +17,12 @@ public class CommentRepository extends AbstractRepository<Comment, Long> {
     }
 
     @Override
-    public Comment findById(Long id) {
+    public Optional<Comment> findById(Long id) {
         EntityGraph<Comment> entityGraph = entityManager.createEntityGraph(Comment.class);
         TypedQuery<Comment> typedQuery = entityManager.createQuery("SELECT c FROM Comment c WHERE c.id = :id", Comment.class);
         typedQuery.setParameter("id", id);
         entityGraph.addAttributeNodes("user", "post");
         typedQuery.setHint("jakarta.persistence.loadgraph", entityGraph);
-        return typedQuery.getSingleResult();
+        return Optional.ofNullable(typedQuery.getSingleResult());
     }
 }

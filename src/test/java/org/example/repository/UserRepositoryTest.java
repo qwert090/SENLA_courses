@@ -49,7 +49,7 @@ public class UserRepositoryTest {
     @Test
     public void findByIdTest() {
         Long id = 1L;
-        User user = userRepository.findById(id);
+        User user = userRepository.findById(id).orElseThrow();
         assertNotNull(user);
         assertEquals("john_doe", user.getNickname());
     }
@@ -73,7 +73,7 @@ public class UserRepositoryTest {
         Credentials credentials = new Credentials();
         user.setCredentials(credentials);
         userRepository.update(user);
-        User updatedUser = userRepository.findById(1L);
+        User updatedUser = userRepository.findById(1L).orElseThrow();
         assertNotNull(updatedUser);
         assertEquals("john_doe", updatedUser.getNickname());
     }

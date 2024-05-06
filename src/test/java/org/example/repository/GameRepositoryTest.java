@@ -47,7 +47,7 @@ public class GameRepositoryTest {
     @Test
     public void findByIdTest() {
         Long id = 1L;
-        Game game = gameRepository.findById(id);
+        Game game = gameRepository.findById(id).orElseThrow();
         assertNotNull(game);
         assertEquals("Chess", game.getName());
     }
@@ -67,7 +67,7 @@ public class GameRepositoryTest {
         game.setId(1L);
         game.setName("UpdateGame");
         gameRepository.update(game);
-        Game updatedGame = gameRepository.findById(1L);
+        Game updatedGame = gameRepository.findById(1L).orElseThrow();
         assertNotNull(updatedGame);
         assertEquals("UpdateGame", updatedGame.getName());
     }

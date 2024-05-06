@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
@@ -51,7 +53,7 @@ public class GameServiceTest {
         Game game = new Game();
         GameDto gameDto = new GameDto();
         when(mapper.toDto(GameDto.class, game)).thenReturn(gameDto);
-        when(gameRepository.findById(gameId)).thenReturn(game);
+        when(gameRepository.findById(gameId)).thenReturn(Optional.of(game));
         GameDto result = gameService.getById(gameId);
         assertSame(gameDto, result);
     }

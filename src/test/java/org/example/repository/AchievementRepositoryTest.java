@@ -49,7 +49,7 @@ public class AchievementRepositoryTest {
     @Test
     public void findByIdTest() {
         long id = 1L;
-        Achievement achievement = achievementRepository.findById(id);
+        Achievement achievement = achievementRepository.findById(id).orElseThrow();
         assertNotNull(achievement);
         assertEquals("First Win", achievement.getName());
     }
@@ -73,7 +73,7 @@ public class AchievementRepositoryTest {
         achievement.setName("UpdatedAchievement");
         achievement.setGame(game);
         achievementRepository.update(achievement);
-        Achievement updatedAchievement = achievementRepository.findById(1L);
+        Achievement updatedAchievement = achievementRepository.findById(1L).orElseThrow();
         assertNotNull(updatedAchievement);
         assertEquals("UpdatedAchievement", updatedAchievement.getName());
     }
