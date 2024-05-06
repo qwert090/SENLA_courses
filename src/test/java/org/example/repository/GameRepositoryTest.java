@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ContextConfiguration(classes = {ApplicationConfigTest.class})
 @ExtendWith(SpringExtension.class)
+@WebAppConfiguration
 public class GameRepositoryTest {
     private GameRepository gameRepository;
 
@@ -45,7 +47,7 @@ public class GameRepositoryTest {
     @Test
     public void findByIdTest() {
         Long id = 1L;
-        Game game = gameRepository.findById(id);
+        Game game = gameRepository.findById(id).orElseThrow();
         assertNotNull(game);
         assertEquals("Chess", game.getName());
     }
@@ -65,7 +67,7 @@ public class GameRepositoryTest {
         game.setId(1L);
         game.setName("UpdateGame");
         gameRepository.update(game);
-        Game updatedGame = gameRepository.findById(1L);
+        Game updatedGame = gameRepository.findById(1L).orElseThrow();
         assertNotNull(updatedGame);
         assertEquals("UpdateGame", updatedGame.getName());
     }

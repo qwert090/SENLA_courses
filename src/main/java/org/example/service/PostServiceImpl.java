@@ -1,12 +1,16 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.dto.PostDto;
 import org.example.entity.Post;
+import org.example.exception.EntityNotFoundException;
 import org.example.repository.impl.PostRepository;
 import org.example.service.serviceInterface.PostService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,20 +26,19 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         postRepository.deleteById(id);
 
     }
 
     @Override
-    public PostDto getById(long id) {
-        Post post = postRepository.findById(id);
+    public PostDto getById(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Post not found"));
         return mapper.toDto(PostDto.class, post);
     }
 
     @Override
     public void updatePost(PostDto postDto) {
-        postRepository.findById(postDto.getId());
         Post updatePost = mapper.toEntity(Post.class, postDto);
         postRepository.update(updatePost);
     }

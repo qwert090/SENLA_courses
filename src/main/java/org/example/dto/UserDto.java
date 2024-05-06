@@ -10,9 +10,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
-    private long id;
+    private Long id;
     private String nickname;
     private String description;
     private String avatar;
-    private int totalExp;
+    private Integer totalExp;
+    private CredentialsDto credentials;
 }

@@ -1,7 +1,9 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User extends AbstractEntity{
 
     @Column(name = "nickname")
@@ -22,7 +26,7 @@ public class User extends AbstractEntity{
     private String avatar;
 
     @Column(name = "total_experience")
-    private int totalExp;
+    private Integer totalExp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ranks_id")
@@ -49,4 +53,11 @@ public class User extends AbstractEntity{
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "followed_id")
     private List<User> followed;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+    private List<Role> roles;
+
 }

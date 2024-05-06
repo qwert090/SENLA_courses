@@ -15,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ContextConfiguration(classes = {ApplicationConfigTest.class})
 @ExtendWith(SpringExtension.class)
+@WebAppConfiguration
 public class AchievementRepositoryTest {
 
     private AchievementRepository achievementRepository;
@@ -47,7 +49,7 @@ public class AchievementRepositoryTest {
     @Test
     public void findByIdTest() {
         long id = 1L;
-        Achievement achievement = achievementRepository.findById(id);
+        Achievement achievement = achievementRepository.findById(id).orElseThrow();
         assertNotNull(achievement);
         assertEquals("First Win", achievement.getName());
     }
@@ -71,7 +73,7 @@ public class AchievementRepositoryTest {
         achievement.setName("UpdatedAchievement");
         achievement.setGame(game);
         achievementRepository.update(achievement);
-        Achievement updatedAchievement = achievementRepository.findById(1L);
+        Achievement updatedAchievement = achievementRepository.findById(1L).orElseThrow();
         assertNotNull(updatedAchievement);
         assertEquals("UpdatedAchievement", updatedAchievement.getName());
     }

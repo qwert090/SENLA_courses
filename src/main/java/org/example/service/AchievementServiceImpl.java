@@ -1,12 +1,16 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.dto.AchievementDto;
 import org.example.entity.Achievement;
+import org.example.exception.EntityNotFoundException;
 import org.example.repository.impl.AchievementRepository;
 import org.example.service.serviceInterface.AchievementService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,20 +26,20 @@ public class AchievementServiceImpl implements AchievementService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         achievementRepository.deleteById(id);
 
     }
 
     @Override
-    public AchievementDto getById(long id) {
-        Achievement achievement = (Achievement) achievementRepository.findById(id);
+    public AchievementDto getById(Long id) {
+        Achievement achievement = achievementRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("Achievement not found"));
         return mapper.toDto(AchievementDto.class, achievement);
     }
 
     @Override
     public void updateAchievement(AchievementDto achievementDto) {
-        achievementRepository.findById(achievementDto.getId());
         Achievement updateAchievement = mapper.toEntity(Achievement.class, achievementDto);
         achievementRepository.update(updateAchievement);
     }

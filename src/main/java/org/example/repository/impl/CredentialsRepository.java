@@ -6,6 +6,8 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import org.example.entity.Credentials;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class CredentialsRepository extends AbstractRepository<Credentials, Long> {
 
@@ -14,11 +16,10 @@ public class CredentialsRepository extends AbstractRepository<Credentials, Long>
     }
 
     @Override
-    public Credentials findById(Long id) {
+    public Optional<Credentials> findById(Long id) {
         TypedQuery<Credentials> typedQuery = entityManager.createQuery(
-                "SELECT c FROM Credentials c LEFT JOIN FETCH c.roles WHERE c.id = :id", Credentials.class
-        );
+                "SELECT c FROM Credentials c WHERE c.id = :id", Credentials.class);
         typedQuery.setParameter("id", id);
-        return typedQuery.getSingleResult();
+        return Optional.ofNullable(typedQuery.getSingleResult());
     }
 }

@@ -15,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ContextConfiguration(classes = {ApplicationConfigTest.class})
 @ExtendWith(SpringExtension.class)
+@WebAppConfiguration
 public class CommentRepositoryTest {
 
     private CommentRepository commentRepository;
@@ -47,7 +49,7 @@ public class CommentRepositoryTest {
     @Test
     public void findByIdTest() {
         Long id = 1L;
-        Comment comment = commentRepository.findById(id);
+        Comment comment = commentRepository.findById(id).orElseThrow();
         assertNotNull(comment);
         assertEquals("Great post!", comment.getContent());
     }
@@ -70,7 +72,7 @@ public class CommentRepositoryTest {
         comment.setContent("UpdatedComment");
         comment.setUser(user);
         commentRepository.update(comment);
-        Comment updatedComment = commentRepository.findById(1L);
+        Comment updatedComment = commentRepository.findById(1L).orElseThrow();
         assertNotNull(updatedComment);
         assertEquals("UpdatedComment", updatedComment.getContent());
     }

@@ -6,6 +6,8 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import org.example.entity.Role;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class RoleRepository extends AbstractRepository<Role, Long> {
 
@@ -15,9 +17,9 @@ public class RoleRepository extends AbstractRepository<Role, Long> {
     }
 
     @Override
-    public Role findById(Long id){
+    public Optional<Role> findById(Long id){
         TypedQuery<Role> userTypedQuery = entityManager.createQuery("SELECT r  FROM Role r WHERE r.id = :id", Role.class)
                 .setParameter("id", id);
-        return userTypedQuery.getSingleResult();
+        return Optional.ofNullable(userTypedQuery.getSingleResult());
     }
 }

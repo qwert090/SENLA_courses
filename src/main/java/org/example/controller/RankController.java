@@ -3,30 +3,31 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.RankDto;
 import org.example.service.serviceInterface.RankService;
-import org.example.utils.JsonMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
-@Component
+@RestController
+@RequestMapping("/ranks")
 @RequiredArgsConstructor
 public class RankController {
     private final RankService rankService;
-    private final JsonMapper json;
 
-    public void createRank(String serializedRank){
-        RankDto rankDto = json.deserialize(serializedRank, RankDto.class);
+    @PostMapping
+    public void createRank(@RequestBody RankDto rankDto){
         rankService.createRank(rankDto);
     }
 
-    public void deleteById(long rankId){
+    @DeleteMapping("/{rankId}")
+    public void deleteById(@PathVariable("rankId") Long rankId){
         rankService.deleteById(rankId);
     }
 
-    public void updateRank(String serializedRank){
-        RankDto rankDto = json.deserialize(serializedRank, RankDto.class);
+    @PutMapping
+    public void updateRank(@RequestBody RankDto rankDto){
         rankService.updateRank(rankDto);
     }
 
-    public RankDto getById(long rankId){
+    @GetMapping("/{rankId}")
+    public RankDto getById(@PathVariable("rankId") Long rankId){
         return rankService.getById(rankId);
     }
 }

@@ -1,9 +1,9 @@
 INSERT INTO ranks (name, description)
 VALUES
     ('Beginner', 'Novice level');
-INSERT INTO users (nickname, description, avatar, total_experience, ranks_id, credentials_id)
+INSERT INTO users (nickname, description, avatar, total_experience, ranks_id, roles_id, credentials_id)
 VALUES
-    ('john_doe', 'Hello, I am John Doe.', 'https://example.com/avatar.png', 1000, null, null);
+    ('john_doe', 'Hello, I am John Doe.', 'https://example.com/avatar.png', 1000, null, null, null);
 INSERT INTO credentials (email, password)
 VALUES
     ('john.doe@example.com', 'password123');

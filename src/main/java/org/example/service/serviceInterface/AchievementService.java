@@ -6,9 +6,9 @@ public interface AchievementService {
 
     void createAchievement(AchievementDto achievementDto);
 
-    void deleteById(long id);
+    void deleteById(Long id);
 
-    AchievementDto getById(long id);
+    AchievementDto getById(Long id);
 
     void updateAchievement(AchievementDto achievementDto);
 }

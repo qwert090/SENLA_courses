@@ -7,6 +7,8 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import org.example.entity.AchievementRequest;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class AchievementRequestRepository extends AbstractRepository<AchievementRequest, Long> {
 
@@ -15,7 +17,7 @@ public class AchievementRequestRepository extends AbstractRepository<Achievement
     }
 
     @Override
-    public AchievementRequest findById(Long id) {
+    public Optional<AchievementRequest> findById(Long id) {
         EntityGraph<AchievementRequest> entityGraph = entityManager.createEntityGraph(AchievementRequest.class);
         TypedQuery<AchievementRequest> typedQuery = entityManager.createQuery(
                 "SELECT a FROM AchievementRequest a WHERE a.id = :id", AchievementRequest.class
@@ -23,6 +25,6 @@ public class AchievementRequestRepository extends AbstractRepository<Achievement
         typedQuery.setParameter("id", id);
         entityGraph.addAttributeNodes("users");
         typedQuery.setHint("jakarta.persistence.loadgraph", entityGraph);
-        return typedQuery.getSingleResult();
+        return Optional.ofNullable(typedQuery.getSingleResult());
     }
 }

@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ContextConfiguration(classes = {ApplicationConfigTest.class})
 @ExtendWith(SpringExtension.class)
+@WebAppConfiguration
 public class RoleRepositoryTest {
     private RoleRepository roleRepository;
 
@@ -45,7 +47,7 @@ public class RoleRepositoryTest {
     @Test
     public void findByIdTest() {
         Long id = 1L;
-        Role role = roleRepository.findById(id);
+        Role role = roleRepository.findById(id).orElseThrow();
         assertNotNull(role);
         assertEquals("Admin", role.getName());
     }
@@ -65,7 +67,7 @@ public class RoleRepositoryTest {
         role.setId(1L);
         role.setName("UpdateRole");
         roleRepository.update(role);
-        Role updatedRole = roleRepository.findById(1L);
+        Role updatedRole = roleRepository.findById(1L).orElseThrow();
         assertNotNull(updatedRole);
         assertEquals("UpdateRole", updatedRole.getName());
     }

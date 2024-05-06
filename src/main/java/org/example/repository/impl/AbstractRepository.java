@@ -13,6 +13,7 @@ import org.example.repository.api.RepositoryApi;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class AbstractRepository<T extends AbstractEntity, PK extends Serializable> implements RepositoryApi<T, Long> {
@@ -23,12 +24,11 @@ public class AbstractRepository<T extends AbstractEntity, PK extends Serializabl
     protected final CriteriaBuilder criteriaBuilder;
 
     @Override
-    public T findById(Long id) {
+    public Optional<T> findById(Long id) {
         CriteriaQuery<T> query = criteriaBuilder.createQuery(entityClass);
         Root<T> root = query.from(entityClass);
         query.select(root).where(criteriaBuilder.equal(root.get(AbstractEntity_.ID), id));
-
-        return entityManager.createQuery(query).getSingleResult();
+        return Optional.ofNullable(entityManager.createQuery(query).getSingleResult());
     }
 
     @Override
@@ -46,8 +46,8 @@ public class AbstractRepository<T extends AbstractEntity, PK extends Serializabl
     }
 
     @Override
-    public void update(T entity) {
-        entityManager.merge(entity);
+    public void update(T updateEntity) {
+        entityManager.merge(updateEntity);
         entityManager.flush();
     }
 

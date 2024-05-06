@@ -6,9 +6,9 @@ public interface UserService {
 
     void createUser(UserDto userDto);
 
-    void deleteById(long id);
+    void deleteById(Long id);
 
-    UserDto getById(long id);
+    UserDto getById(Long id);
 
     void updateUser(UserDto userDto);
 }

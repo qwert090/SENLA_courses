@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ContextConfiguration(classes = {ApplicationConfigTest.class})
 @ExtendWith(SpringExtension.class)
+@WebAppConfiguration
 public class RankRepositoryTest {
     private RankRepository rankRepository;
 
@@ -45,7 +47,7 @@ public class RankRepositoryTest {
     @Test
     public void findByIdTest() {
         Long id = 1L;
-        Rank rank = rankRepository.findById(id);
+        Rank rank = rankRepository.findById(id).orElseThrow();
         assertNotNull(rank);
         assertEquals("Beginner", rank.getName());
     }
@@ -65,7 +67,7 @@ public class RankRepositoryTest {
         rank.setId(1L);
         rank.setName("UpdateRank");
         rankRepository.update(rank);
-        Rank updatedRank = rankRepository.findById(1L);
+        Rank updatedRank = rankRepository.findById(1L).orElseThrow();
         assertNotNull(updatedRank);
         assertEquals("UpdateRank", updatedRank.getName());
     }

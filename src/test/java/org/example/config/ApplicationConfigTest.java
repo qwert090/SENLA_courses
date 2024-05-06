@@ -24,7 +24,7 @@ import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 @EnableAspectJAutoProxy
 @ComponentScan("org.example")
 @RequiredArgsConstructor
-public class ApplicationConfigTest {
+public class ApplicationConfigTest{
     @Value("${h2db.url}")
     private String url;
     @Value("${h2db.username}")
@@ -82,7 +82,6 @@ public class ApplicationConfigTest {
         factoryBean.setDataSource(dataSource);
         factoryBean.setPackagesToScan("org.example.entity");
         factoryBean.setJpaVendorAdapter(vendorAdapter);
-
         return factoryBean;
     }
 

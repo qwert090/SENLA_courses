@@ -76,11 +76,11 @@ public class ApplicationConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true);
+        vendorAdapter.setGenerateDdl(false);
         vendorAdapter.setShowSql(true);
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setDataSource(dataSource);
-        factoryBean.setPackagesToScan("entity");
+        factoryBean.setPackagesToScan("org.example.entity");
         factoryBean.setJpaVendorAdapter(vendorAdapter);
         return factoryBean;
     }

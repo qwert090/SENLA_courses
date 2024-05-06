@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ContextConfiguration(classes = {ApplicationConfigTest.class})
 @ExtendWith(SpringExtension.class)
+@WebAppConfiguration
 public class PostRepositoryTest {
     private PostRepository postRepository;
 
@@ -45,7 +47,7 @@ public class PostRepositoryTest {
     @Test
     public void findByIdTest() {
         Long id = 1L;
-        Post post = postRepository.findById(id);
+        Post post = postRepository.findById(id).orElseThrow();
         assertNotNull(post);
         assertEquals("Hello, world!", post.getContent());
     }
@@ -65,7 +67,7 @@ public class PostRepositoryTest {
         post.setId(1L);
         post.setContent("UpdatePost");
         postRepository.update(post);
-        Post updatedPost = postRepository.findById(1L);
+        Post updatedPost = postRepository.findById(1L).orElseThrow();
         assertNotNull(updatedPost);
         assertEquals("UpdatePost", updatedPost.getContent());
     }

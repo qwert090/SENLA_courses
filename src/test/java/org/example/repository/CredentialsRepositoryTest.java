@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ContextConfiguration(classes = {ApplicationConfigTest.class})
 @ExtendWith(SpringExtension.class)
+@WebAppConfiguration
 public class CredentialsRepositoryTest {
     private CredentialsRepository credentialsRepository;
 
@@ -45,7 +47,7 @@ public class CredentialsRepositoryTest {
     @Test
     public void findByIdTest() {
         Long id = 1L;
-        Credentials credentials = credentialsRepository.findById(id);
+        Credentials credentials = credentialsRepository.findById(id).orElseThrow();
         assertNotNull(credentials);
         assertEquals("password123", credentials.getPassword());
     }
@@ -65,7 +67,7 @@ public class CredentialsRepositoryTest {
         credentials.setId(1L);
         credentials.setPassword("UpdatedPassword");
         credentialsRepository.update(credentials);
-        Credentials updatedCredentials = credentialsRepository.findById(1L);
+        Credentials updatedCredentials = credentialsRepository.findById(1L).orElseThrow();
         assertNotNull(updatedCredentials);
         assertEquals("UpdatedPassword", updatedCredentials.getPassword());
     }

@@ -1,12 +1,16 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.dto.CommentDto;
 import org.example.entity.Comment;
+import org.example.exception.EntityNotFoundException;
 import org.example.repository.impl.CommentRepository;
 import org.example.service.serviceInterface.CommentService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,20 +26,20 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         commentRepository.deleteById(id);
 
     }
 
     @Override
-    public CommentDto getById(long id) {
-        Comment comment = commentRepository.findById(id);
+    public CommentDto getById(Long id) {
+        Comment comment = commentRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("Comment not found"));
         return mapper.toDto(CommentDto.class, comment);
     }
 
     @Override
     public void updateComment(CommentDto commentDto) {
-        commentRepository.findById(commentDto.getId());
         Comment updateComment = mapper.toEntity(Comment.class, commentDto);
         commentRepository.update(updateComment);
     }

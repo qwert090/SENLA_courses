@@ -1,15 +1,19 @@
 package org.example.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "credentials")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Credentials extends AbstractEntity {
 
     @Column(name = "password")
@@ -17,8 +21,4 @@ public class Credentials extends AbstractEntity {
 
     @Column(name = "email")
     private String email;
-
-    @JoinColumn(name = "roles_id")
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Role> roles;
 }

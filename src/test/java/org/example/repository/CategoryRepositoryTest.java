@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ContextConfiguration(classes = {ApplicationConfigTest.class})
 @ExtendWith(SpringExtension.class)
+@WebAppConfiguration
 public class CategoryRepositoryTest {
     private CategoryRepository categoryRepository;
 
@@ -45,7 +47,7 @@ public class CategoryRepositoryTest {
     @Test
     public void findByIdTest() {
         Long id = 1L;
-        Category category = categoryRepository.findById(id);
+        Category category = categoryRepository.findById(id).orElseThrow();
         assertNotNull(category);
         assertEquals("Technology", category.getName());
     }
@@ -65,7 +67,7 @@ public class CategoryRepositoryTest {
         category.setId(1L);
         category.setName("UpdatedCategory");
         categoryRepository.update(category);
-        Category updatedCategory = categoryRepository.findById(1L);
+        Category updatedCategory = categoryRepository.findById(1L).orElseThrow();
         assertNotNull(updatedCategory);
         assertEquals("UpdatedCategory", updatedCategory.getName());
     }
