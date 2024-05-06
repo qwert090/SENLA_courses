@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class CredentialsServiceImpl implements CredentialsService {
     private final CredentialsRepository credentialsRepository;
     private final CustomMapper mapper;

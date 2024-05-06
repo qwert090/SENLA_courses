@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class GameServiceImpl implements GameService {
     private final GameRepository gameRepository;
     private final CustomMapper mapper;

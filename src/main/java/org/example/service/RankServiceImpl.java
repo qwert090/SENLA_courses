@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class RankServiceImpl implements RankService {
     private final RankRepository rankRepository;
     private final CustomMapper mapper;

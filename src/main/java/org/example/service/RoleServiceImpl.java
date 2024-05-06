@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
     private final CustomMapper mapper;

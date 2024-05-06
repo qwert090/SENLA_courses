@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class AchievementRequestServiceImpl implements AchievementRequestService {
     private final AchievementRequestRepository achievementRequestRepository;
     private final CustomMapper mapper;
