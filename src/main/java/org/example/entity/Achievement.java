@@ -29,6 +29,10 @@ public class Achievement extends AbstractEntity {
     @Column(name = "type")
     private String type;
 
+    @JoinColumn(name = "users_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User users;
+
     @JoinColumn(name = "game_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Game game;

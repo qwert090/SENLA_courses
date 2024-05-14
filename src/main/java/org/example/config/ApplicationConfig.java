@@ -1,21 +1,18 @@
 package org.example.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import liquibase.integration.spring.SpringLiquibase;
 import lombok.RequiredArgsConstructor;
+import org.example.service.security.UserDetailsServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.postgresql.ds.PGSimpleDataSource;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
-
-import javax.sql.DataSource;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 
@@ -24,13 +21,9 @@ import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 @EnableAspectJAutoProxy
 @ComponentScan("org.example")
 @RequiredArgsConstructor
+@EnableMethodSecurity
 public class ApplicationConfig {
-    @Value("${db.url}")
-    private String url;
-    @Value("${db.username}")
-    private String username;
-    @Value("${db.password}")
-    private String password;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Bean
     public ModelMapper modelMapper() {
@@ -49,49 +42,20 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public DataSource dataSource() {
-        PGSimpleDataSource dataSource = new PGSimpleDataSource();
-        dataSource.setURL(url);
-        dataSource.setUser(username);
-        dataSource.setPassword(password);
-        return dataSource;
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
     }
 
     @Bean
-    public SpringLiquibase springLiquibase(DataSource dataSource) {
-        SpringLiquibase springLiquibase = new SpringLiquibase();
-        springLiquibase.setDataSource(dataSource);
-        springLiquibase.setChangeLog("changelog.xml");
-        return springLiquibase;
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfiguration) throws Exception {
+        return authConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(DataSource dataSource, LocalContainerEntityManagerFactoryBean entityManagerFactory) {
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setDataSource(dataSource);
-        transactionManager.setEntityManagerFactory(entityManagerFactory.getObject());
-        return transactionManager;
-    }
-
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(false);
-        vendorAdapter.setShowSql(true);
-        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-        factoryBean.setDataSource(dataSource);
-        factoryBean.setPackagesToScan("org.example.entity");
-        factoryBean.setJpaVendorAdapter(vendorAdapter);
-        return factoryBean;
-    }
-
-    @Bean
-    public EntityManager entityManager(LocalContainerEntityManagerFactoryBean entityManagerFactory) {
-        return entityManagerFactory.getObject().createEntityManager();
-    }
-
-    @Bean
-    public CriteriaBuilder criteriaBuilder(EntityManager entityManager) {
-        return entityManager.getCriteriaBuilder();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

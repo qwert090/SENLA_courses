@@ -1,16 +1,13 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.example.dto.PostDto;
 import org.example.entity.Post;
-import org.example.exception.EntityNotFoundException;
+import org.example.exception.entityNotFound.PostNotFoundException;
 import org.example.repository.impl.PostRepository;
 import org.example.service.serviceInterface.PostService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +30,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto getById(Long id) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Post not found"));
+        Post post = postRepository.findById(id).orElseThrow(() -> new PostNotFoundException("id" + id));
         return mapper.toDto(PostDto.class, post);
     }
 

@@ -1,16 +1,13 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.example.dto.CategoryDto;
 import org.example.entity.Category;
-import org.example.exception.EntityNotFoundException;
+import org.example.exception.entityNotFound.CategoryNotFoundException;
 import org.example.repository.impl.CategoryRepository;
 import org.example.service.serviceInterface.CategoryService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto getById(Long id) {
         Category category = categoryRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException("Category not found"));
+                new CategoryNotFoundException("id " + id));
         return mapper.toDto(CategoryDto.class, category);
     }
 

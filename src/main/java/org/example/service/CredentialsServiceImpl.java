@@ -1,16 +1,13 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.example.dto.CredentialsDto;
 import org.example.entity.Credentials;
-import org.example.exception.EntityNotFoundException;
+import org.example.exception.entityNotFound.CredentialsNotFoundException;
 import org.example.repository.impl.CredentialsRepository;
 import org.example.service.serviceInterface.CredentialsService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +29,7 @@ public class CredentialsServiceImpl implements CredentialsService {
     @Override
     public CredentialsDto getById(Long id) {
         Credentials credentials = credentialsRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException("Credentials not found"));
+                new CredentialsNotFoundException("id " + id));
         return mapper.toDto(CredentialsDto.class, credentials);
     }
 
