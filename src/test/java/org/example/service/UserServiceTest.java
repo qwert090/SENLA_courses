@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.config.ApplicationConfigTest;
+import org.example.dto.RoleDto;
 import org.example.dto.UserDto;
 import org.example.entity.User;
 import org.example.repository.impl.UserRepository;
@@ -12,6 +13,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -32,6 +35,9 @@ public class UserServiceTest {
     @Test
     public void createUserTest() {
         UserDto userDto = new UserDto();
+        RoleDto roleDto = new RoleDto();
+        List<RoleDto> roleDtoList = new ArrayList<>();
+        userDto.setRoles(roleDtoList);
         User user = new User();
         when(mapper.toEntity(User.class, userDto)).thenReturn(user);
         userService.createUser(userDto);

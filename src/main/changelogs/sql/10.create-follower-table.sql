@@ -1,4 +1,4 @@
-CREATE TABLE follower
+CREATE TABLE followers
 (
     following_id bigint,
     follower_id bigint,

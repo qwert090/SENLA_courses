@@ -23,6 +23,7 @@ public class AchievementRequest extends AbstractEntity {
     @Column(name = "platform")
     private String platform;
 
+    @JoinColumn(name = "users_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User users;
 }

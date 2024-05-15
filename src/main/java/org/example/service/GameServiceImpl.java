@@ -1,16 +1,13 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.example.dto.GameDto;
 import org.example.entity.Game;
-import org.example.exception.EntityNotFoundException;
+import org.example.exception.entityNotFound.GameNotFoundException;
 import org.example.repository.impl.GameRepository;
 import org.example.service.serviceInterface.GameService;
 import org.example.utils.CustomMapper;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +29,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public GameDto getById(Long id) {
-        Game game = gameRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Game not found"));
+        Game game = gameRepository.findById(id).orElseThrow(() -> new GameNotFoundException("id" + id));
         return mapper.toDto(GameDto.class, game);
     }
 

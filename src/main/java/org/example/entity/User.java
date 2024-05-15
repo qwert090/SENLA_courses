@@ -1,11 +1,9 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Getter
@@ -14,7 +12,8 @@ import java.util.List;
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends AbstractEntity{
+@Builder
+public class User extends AbstractEntity {
 
     @Column(name = "nickname")
     private String nickname;
@@ -27,6 +26,9 @@ public class User extends AbstractEntity{
 
     @Column(name = "total_experience")
     private Integer totalExp;
+
+    @Column(name = "date_creating")
+    private OffsetDateTime dateCreating;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ranks_id")
@@ -42,22 +44,18 @@ public class User extends AbstractEntity{
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "users")
     private List<AchievementRequest> achievementRequests;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "achievement_id")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "users")
     private List<Achievement> achievements;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "follower_id")
-    private List<User> follower;
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "following")
+    private List<User> followers;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "followed_id")
-    private List<User> followed;
+    @JoinTable(name = "followers",
+            joinColumns = {@JoinColumn(name = "following_id")},
+            inverseJoinColumns = {@JoinColumn(name = "follower_id")})
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<User> following;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "users")
     private List<Role> roles;
-
 }

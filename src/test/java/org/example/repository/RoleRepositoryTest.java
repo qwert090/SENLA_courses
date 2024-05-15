@@ -7,6 +7,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.transaction.Transactional;
 import org.example.config.ApplicationConfigTest;
 import org.example.entity.Role;
+import org.example.entity.enums.RoleName;
 import org.example.repository.impl.RoleRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,15 +50,15 @@ public class RoleRepositoryTest {
         Long id = 1L;
         Role role = roleRepository.findById(id).orElseThrow();
         assertNotNull(role);
-        assertEquals("Admin", role.getName());
+        assertEquals(RoleName.ROLE_ADMIN, role.getName());
     }
 
     @Test
     @Transactional
     public void saveTest() {
         Role role = new Role();
-        role.setName("RoleName");
-        assertEquals("RoleName", role.getName());
+        role.setName(RoleName.ROLE_USER);
+        assertEquals(RoleName.ROLE_USER, role.getName());
     }
 
     @Test
@@ -65,11 +66,11 @@ public class RoleRepositoryTest {
     public void updateTest() {
         Role role = new Role();
         role.setId(1L);
-        role.setName("UpdateRole");
+        role.setName(RoleName.ROLE_USER);
         roleRepository.update(role);
         Role updatedRole = roleRepository.findById(1L).orElseThrow();
         assertNotNull(updatedRole);
-        assertEquals("UpdateRole", updatedRole.getName());
+        assertEquals(RoleName.ROLE_USER, updatedRole.getName());
     }
 
     @Test
